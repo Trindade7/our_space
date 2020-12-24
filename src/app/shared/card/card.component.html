@@ -1,0 +1,14 @@
+<div class="card padded" [ngStyle]="{
+    'background-image': 'url(' + card.backgroundImageUrl +')' ,
+    'background-color': card.backgroundColor,
+    'color': card.textColor
+}">
+
+    <div class="sized-box-4"></div>
+    <div class="sized-box-4"></div>
+
+    <p class="message">
+        {{card.message}}
+    </p>
+
+</div>
