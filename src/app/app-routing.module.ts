@@ -2,12 +2,16 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { CardsComponent } from './cards/cards.component';
+import { NewCardComponent } from './new-card/new-card.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { ViewCardComponent } from './view-card/view-card.component';
 
 const routes: Routes = [
   { path: 'cards/:id', component: ViewCardComponent },
   { path: 'cards', component: CardsComponent },
-  { path: '', pathMatch: 'full', redirectTo: '/cards' }
+  { path: 'new-card', component: NewCardComponent },
+  { path: '', pathMatch: 'full', redirectTo: '/cards' },
+  { path: '**', component: PageNotFoundComponent }
 ];
 
 @NgModule({

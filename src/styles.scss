@@ -2,283 +2,319 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400&family=Rokkitt:wght@400;600&display=swap');
 @import "~bootstrap-icons/font/bootstrap-icons.css";
 
-:root{
-    --clr-text: rgba(0,0,0,0.87);
-    --clr-text-disabled: rgba(0,0,0,0.67);
-    --clr-text-light: rgba(255,255,255,0.75);
-    --clr-primary: rgba(0,0,0,1);
-    --clr-accent: rgba(0,0,0,1);
+:root {
+  --clr-text: rgba(0, 0, 0, 0.87);
+  --clr-text-disabled: rgba(0, 0, 0, 0.67);
+  --clr-text-light: rgba(255, 255, 255, 0.75);
+  --clr-primary: rgba(0, 0, 0, 1);
+  --clr-accent: rgba(0, 0, 0, 1);
 
-    --ff-title: 'Rokkitt', serif;
-    --ff-sans:  'Roboto', sans-serif;
+  --ff-title: 'Rokkitt', serif;
+  --ff-sans: 'Roboto', sans-serif;
 }
 
 *,
 *::after,
-*::after{
-    margin: 0;
-    padding: 0;
-    box-sizing: inherit;
+*::after {
+  margin: 0;
+  padding: 0;
+  font-size: inherit;
+  box-sizing: inherit;
 }
 
-html{
-    box-sizing: border-box;
-    font-size: 1.125rem;
-    font-family: var(--ff-sans);
-    color: var(--clr-text);
+html {
+  box-sizing: border-box;
+  font-size: 1.125rem;
+  font-family: var(--ff-sans);
+  color: var(--clr-text);
 }
 
-img{
-    display: block;
-    max-width: 100%;
+img {
+  display: block;
+  max-width: 100%;
 }
 
-ul{
-    list-style: none;
+ul {
+  list-style: none;
 }
 
 // typography
 
-h2,h3{
-    font-family: var(--ff-title);
-    line-height: 0.8;
-    font-weight: 600;
+h2,
+h3 {
+  font-family: var(--ff-title);
+  line-height: 0.8;
+  font-weight: 600;
 }
 
-h2{
-    font-size: 2.5rem;
+h2 {
+  font-size: 2.5rem;
 }
 
-h3{
-    font-size: 1.75rem;
+h3 {
+  font-size: 1.75rem;
 }
 
-p{
-    margin-bottom: .75rem;
+p {
+  margin-bottom: .75rem;
+}
+
+.text-center {
+  text-align: center;
 }
 
 // *################### PADDINGS AND MARGINS
 .padded {
-    padding: 1rem;
+  padding: 1rem;
+
+  &-y {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+
+  &-x {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  &-05 {
+    padding: 0.5rem;
 
     &-y {
-      padding-top: 1rem;
-      padding-bottom: 1rem;
+      padding-top: 0.5rem;
+      padding-bottom: 0.5rem;
     }
+
     &-x {
-      padding-left: 1rem;
-      padding-right: 1rem;
+      padding-left: 0.5rem;
+      padding-right: 0.5rem;
+    }
+  }
+
+  &-2 {
+    padding: 2rem;
+
+    &-y {
+      padding-top: 2rem;
+      padding-bottom: 2rem;
     }
 
-    &-05 {
-      padding: 0.5rem;
-      &-y {
-        padding-top: 0.5rem;
-        padding-bottom: 0.5rem;
-      }
-      &-x {
-        padding-left: 0.5rem;
-        padding-right: 0.5rem;
-      }
+    &-x {
+      padding-left: 2rem;
+      padding-right: 2rem;
     }
-
-    &-2 {
-      padding: 2rem;
-      &-y {
-        padding-top: 2rem;
-        padding-bottom: 2rem;
-      }
-      &-x {
-        padding-left: 2rem;
-        padding-right: 2rem;
-      }
-    }
+  }
 }
+
 .margined {
-    margin: 1rem;
+  margin: 1rem;
+
+  &-y {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  &-x {
+    margin-left: 1rem;
+    margin-right: 1rem;
+  }
+
+  &-05 {
+    margin: 0.5rem;
 
     &-y {
-      margin-top: 1rem;
-      margin-bottom: 1rem;
+      margin-top: 0.5rem;
+      margin-bottom: 0.5rem;
     }
+
     &-x {
-      margin-left: 1rem;
-      margin-right: 1rem;
+      margin-left: 0.5rem;
+      margin-right: 0.5rem;
+    }
+  }
+
+  &-2 {
+    margin: 2rem;
+
+    &-y {
+      margin-top: 2rem;
+      margin-bottom: 2rem;
     }
 
-    &-05 {
-      margin: 0.5rem;
-      &-y {
-        margin-top: 0.5rem;
-        margin-bottom: 0.5rem;
-      }
-      &-x {
-        margin-left: 0.5rem;
-        margin-right: 0.5rem;
-      }
+    &-x {
+      margin-left: 2rem;
+      margin-right: 2rem;
     }
-
-    &-2 {
-      margin: 2rem;
-      &-y {
-        margin-top: 2rem;
-        margin-bottom: 2rem;
-      }
-      &-x {
-        margin-left: 2rem;
-        margin-right: 2rem;
-      }
-    }
+  }
 }
 
-  // *################### SIMPLE COMPONENTS
+// *################### SIMPLE COMPONENTS
 .sized-box {
-    width: 1rem;
-    height: 1rem;
+  width: 1rem;
+  height: 1rem;
 
-    &-05 {
-      width: 1rem * 0.5;
-      height: 1rem * 0.5;
-    }
+  &-05 {
+    width: 1rem * 0.5;
+    height: 1rem * 0.5;
+  }
 
-    &-15 {
-      width: 1rem * 1.5;
-      height: 1rem * 1.5;
-    }
+  &-15 {
+    width: 1rem * 1.5;
+    height: 1rem * 1.5;
+  }
 
-    &-2 {
-      width: 1rem * 2;
-      height: 1rem * 2;
-    }
+  &-2 {
+    width: 1rem * 2;
+    height: 1rem * 2;
+  }
 
-    &-3 {
-      width: 1rem * 3;
-      height: 1rem * 3;
-    }
+  &-3 {
+    width: 1rem * 3;
+    height: 1rem * 3;
+  }
 
-    &-4 {
-      width: 1rem * 4;
-      height: 1rem * 4;
-    }
+  &-4 {
+    width: 1rem * 4;
+    height: 1rem * 4;
+  }
 }
 
 .flexed {
-    display: flex;
+  display: flex;
 
-    &.col {
-      flex-direction: column;
-    }
-    &.center {
-      justify-content: center;
-      align-items: center;
-    }
-    &.center-y {
-      align-items: center;
-      // align-content: center;
-      // justify-content: center;
-    }
-    &.start {
-      justify-content: start;
-      justify-content: flex-start;
-    }
-    &.end {
-      justify-content: end;
-      justify-content: flex-end;
-    }
+  &.col {
+    flex-direction: column;
+  }
+
+  &.center {
+    justify-content: center;
+    align-items: center;
+  }
+
+  &.center-y {
+    align-items: center;
+    // align-content: center;
+    // justify-content: center;
+  }
+
+  &.start {
+    justify-content: start;
+    justify-content: flex-start;
+  }
+
+  &.end {
+    justify-content: end;
+    justify-content: flex-end;
+  }
 }
 
 .spacer {
-    flex: 1 1 auto;
+  flex: 1 1 auto;
 }
 
 .shadowed {
-    box-shadow: 0px 2px 4px -1px rgba(146, 45, 185, 0.2),
-      0px 4px 5px 0px rgba(146, 45, 185, 0.14),
-      0px 1px 10px 0px rgba(146, 45, 185, 0.12);
+  box-shadow: 0px 2px 4px -1px rgba(146, 45, 185, 0.2),
+    0px 4px 5px 0px rgba(146, 45, 185, 0.14),
+    0px 1px 10px 0px rgba(146, 45, 185, 0.12);
 
-    &-8 {
-      box-shadow: 0px 5px 5px -3px rgba(146, 45, 185, 0.2),
-        0px 8px 10px 1px rgba(146, 45, 185, 0.14),
-        0px 3px 14px 2px rgba(146, 45, 185, 0.12);
-    }
+  &-8 {
+    box-shadow: 0px 5px 5px -3px rgba(146, 45, 185, 0.2),
+      0px 8px 10px 1px rgba(146, 45, 185, 0.14),
+      0px 3px 14px 2px rgba(146, 45, 185, 0.12);
+  }
 }
 
 .icon {
-    width: 24px;
-    height: 24px;
+  width: 24px;
+  height: 24px;
 }
 
-.btn{
-    font-size: 1.75rem;
+.btn {
+  padding: 1rem 2rem;
+  border: none;
+  background-color: transparent;
+  height: 40px;
+  width: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &.circle {
+    width: 40px;
     padding: .5rem;
-    border: none;
-    background-color: transparent;
-    height: 40px;
-    display: flex;
+    border-radius: 50%;
+    justify-content: center;
+    align-items: center;
+  }
+  &.outline {
+    border: 1px solid;
+  }
 
-    &.circle{
-      width: 40px;
-      border-radius: 50%;
-      justify-content: center;
-      align-items: center;
-    }
+  &.primary {
+    background-color: var(--clr-primary);
+    color: var(--clr-text-light);
+  }
 
-    &.primary{
-      background-color: var(--clr-primary);
-      color: var(--clr-text-light);
-    }
+  i  {
+    font-size: 1.75rem;
+  }
+
+  span {
+    padding-left: 0.5rem;
+    padding-top: .25rem;
+  }
 }
 
 // *################## COMPONENTS
 .page-header {
-  h3{
+  h3 {
     line-height: 2.5rem;
   }
 
-  .btn{
-  padding: 0;
-}
+  .btn {
+    padding: 0;
+  }
 }
 
 // *################### THUMBS
 @media screen and (min-device-width: 1200px) and (max-device-width: 1600px) and (-webkit-min-device-pixel-ratio: 1) {
-    .desktop-only {
-      display: inherit !important;
-    }
-
-    .mobile-only {
-      display: none !important;
-    }
-
-    *::-webkit-scrollbar-track {
-      box-shadow: inset 0 0 6px #12192c77;
-      border-radius: 4px;
-      background-color: #3e445977;
-    }
-
-    *::-webkit-scrollbar {
-      width: 6px;
-      height: 0px;
-      background-color: #3e445977;
-    }
-
-    .horizontal-scroll:hover::-webkit-scrollbar,
-    .horizontal-scroll:focus::-webkit-scrollbar {
-      height: 6px;
-    }
-
-    .horizontal-scroll::-webkit-scrollbar-thumb {
-      border-radius: 4px;
-      background-color: #fa4bb4;
-    }
-
-    *::-webkit-scrollbar-thumb {
-      border-radius: 4px;
-      background-color: #fa4bb477;
-    }
-
-    * {
-      scrollbar-color: #fa4bb477 rgba(0, 0, 0, 0.2);
-      scrollbar-width: thin;
-    }
+  .desktop-only {
+    display: inherit !important;
   }
+
+  .mobile-only {
+    display: none !important;
+  }
+
+  *::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px #12192c77;
+    border-radius: 4px;
+    background-color: #3e445977;
+  }
+
+  *::-webkit-scrollbar {
+    width: 6px;
+    height: 0px;
+    background-color: #3e445977;
+  }
+
+  .horizontal-scroll:hover::-webkit-scrollbar,
+  .horizontal-scroll:focus::-webkit-scrollbar {
+    height: 6px;
+  }
+
+  .horizontal-scroll::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: #fa4bb4;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: #fa4bb477;
+  }
+
+  * {
+    scrollbar-color: #fa4bb477 rgba(0, 0, 0, 0.2);
+    scrollbar-width: thin;
+  }
+}

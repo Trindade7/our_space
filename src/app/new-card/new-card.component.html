@@ -1,0 +1,81 @@
+<div class="view-card-page flexed col">
+    <nav class="page-header flexed padded">
+        <button (click)="goBack()" class="btn circle text">
+            <i class="bi bi-x"></i>
+        </button>
+
+        <span class="spacer"></span>
+
+        <div *ngIf="current === 0">
+            <h3>Texto</h3>
+        </div>
+
+        <div *ngIf="current === 1">
+            <h3>Fundo</h3>
+        </div>
+
+        <div *ngIf="current === 2">
+            <h3>Preview</h3>
+        </div>
+
+        <span class="spacer"></span>
+
+        <div class="flexed">
+            <button (click)="prev()" class="prev btn circle text">
+                <i class="bi bi-arrow-left"></i>
+            </button>
+            <div class="sized-box-05"></div>
+            <button (click)="next()" class="btn circle text">
+                <i class="bi bi-arrow-right"></i>
+            </button>
+        </div>
+    </nav>
+
+    <span class="spacer"></span>
+
+    <div *ngIf="current === 0" class="card-text padded">
+        <div class="sized-box"></div>
+
+        <div class=" padded">
+            <p class="text-center">
+                Digite a mensagem para o cartão na caixa abaixo...
+            </p>
+        </div>
+
+        <div class="message padded">
+            <textarea #messageInput class="message-input" name="message" id="message-input" rows="10"
+                [(value)]="card.message">
+            </textarea>
+        </div>
+
+        <div class="flexed center padded">
+            <button class="btn icon outline" [disabled]="card.message.length < 5">
+                <span>Escolher fundo</span>
+            </button>
+        </div>
+    </div>
+
+    <div *ngIf="current === 1" class="card-background padded">
+        <div class="sized-box"></div>
+
+        <div class=" padded">
+            <p class="text-center">
+                Digite a mensagem para o cartão na caixa abaixo...
+            </p>
+        </div>
+
+        <div class="message padded">
+            <textarea #messageInput class="message-input" name="message" id="message-input" rows="10"
+                [(value)]="card.message">
+            </textarea>
+        </div>
+
+        <div class="flexed center padded">
+            <button class="btn icon outline" [disabled]="card.message.length < 5">
+                <span>Escolher fundo</span>
+            </button>
+        </div>
+    </div>
+
+
+</div>

@@ -12,7 +12,7 @@
     <span class="spacer"></span>
 
     <div class="cards padded">
-        <app-card></app-card>
+        <app-card *ngFor="let card of cards" [routerLink]="card.id"></app-card>
     </div>
 
     <span class="spacer"></span>
@@ -33,18 +33,18 @@
 
         <div class="controls flexed">
             <div class="flexed end col">
-                <button class="btn circle primary">
+                <button routerLink="/new-card" class="btn circle primary">
                     <i class="bi bi-plus"></i>
                 </button>
             </div>
 
-            <div class="sized-box"></div>
+            <!-- <div class="sized-box"></div>
 
             <div class="flexed end col">
                 <button class="btn circle primary">
                     <i class="bi bi-list"></i>
                 </button>
-            </div>
+            </div> -->
         </div>
     </footer>
 </div>
