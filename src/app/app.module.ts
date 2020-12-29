@@ -1,14 +1,17 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CardsComponent } from './cards/cards.component';
-import { SharedModule } from './shared/shared.module';
 import { CoreModule } from './core/core.module';
-import { ViewCardComponent } from './view-card/view-card.component';
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { NewCardComponent } from './new-card/new-card.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { SharedModule } from './shared/shared.module';
+import { ViewCardComponent } from './view-card/view-card.component';
+import { ColorPickerComponent } from './new-card/color-picker/color-picker.component';
+import { GreetingComponent } from './greeting/greeting.component';
 
 @NgModule({
   declarations: [
@@ -16,13 +19,16 @@ import { NewCardComponent } from './new-card/new-card.component';
     CardsComponent,
     ViewCardComponent,
     PageNotFoundComponent,
-    NewCardComponent
+    NewCardComponent,
+    ColorPickerComponent,
+    GreetingComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     SharedModule,
-    CoreModule
+    CoreModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

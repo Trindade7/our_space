@@ -3,26 +3,45 @@ import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angula
 
 import { CardModel } from '../core/models/card.model';
 
+enum STATES {
+  TEXT,
+  STYLIZE,
+  PREVIEW
+}
+
 @Component({
   templateUrl: './new-card.component.html',
   styleUrls: ['./new-card.component.scss']
 })
 export class NewCardComponent implements OnInit, AfterViewInit {
-  card: Omit<Omit<CardModel, 'dateCreated'>, 'id'> = {
+  @ViewChild('messageInput') messageInput!: ElementRef<HTMLTextAreaElement>;
+  card: CardModel = {
+    id: '',
+    dateCreated: {
+      milliseconds: new Date().getMilliseconds(),
+      seconds: new Date().getSeconds()
+    },
     backgroundColor: '#fff',
     backgroundImageUrl: '',
     message: '',
     textColor: '#000',
   };
-
-  @ViewChild('messageInput') messageInput!: ElementRef<HTMLTextAreaElement>;
-
-  current = 0;
+  STATE_OPTIONS = STATES;
+  currentState: STATES = STATES.TEXT;
+  textColors: string[] = [
+    'purple',
+    'lime',
+    'beige',
+    'pink',
+    'orange',
+    'black',
+    'white',
+    'darkcyan',
+    'green'
+  ];
 
   constructor (private _location: Location) { }
-
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { }
 
   ngAfterViewInit() {
     this.messageInput.nativeElement.focus();
@@ -33,17 +52,39 @@ export class NewCardComponent implements OnInit, AfterViewInit {
   }
 
   next(): void {
-    this.current++;
-    if (this.current === 3) {
-      this.current = 0;
+    if (this.currentState === STATES.PREVIEW) {
+      this.currentState = STATES.TEXT;
+    } else {
+      this.currentState++;
     }
   }
 
   prev(): void {
-    if (this.current === 0) {
-      this.current = 2;
-      return;
+    if (this.currentState === STATES.TEXT) {
+      this.currentState = STATES.PREVIEW;
+    } else {
+      this.currentState--;
     }
-    this.current--;
+  }
+
+  setBackground(background: string): void {
+    console.log(this.card);
+    const newCard = { ...this.card };
+    newCard.backgroundColor = background;
+    this.card = newCard;
+  }
+
+  setBackgroundColor(background: string): void {
+    console.log(this.card);
+    const newCard = { ...this.card };
+    newCard.backgroundColor = background;
+    this.card = newCard;
+  }
+
+  setColor(color: string): void {
+    console.log(this.card);
+    const newCard = { ...this.card };
+    newCard.textColor = color;
+    this.card = newCard;
   }
 }
