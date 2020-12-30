@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "isourspace": {
+      "hosting": {
+        "our-space": [
+          "isourspace"
+        ]
+      }
+    }
+  }
+}

@@ -14,4 +14,7 @@ export class CardsComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  prev(): void { }
+  next(): void { }
+
 }

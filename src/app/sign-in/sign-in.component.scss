@@ -1,0 +1,27 @@
+.signin-page {
+  width: 100%;
+  height: 100vh;
+}
+
+.login {
+  width: 100%;
+  height: 460px;
+  position: relative;
+  max-width: 400px;
+  border: 1px solid rgba($color: #000000, $alpha: .3);
+  padding: 4rem 1rem;
+
+  .info {
+    line-height: 2rem;
+    padding-bottom: 4rem;
+    font-weight: 400;
+  }
+
+  .btn {
+    transform: scale(1.5);
+  }
+}
+
+.error-message {
+  overflow-wrap: anywhere;
+}

@@ -1,17 +1,20 @@
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { AngularFireModule } from '@angular/fire';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
+import { environment } from 'src/environments/environment';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CardsComponent } from './cards/cards.component';
 import { CoreModule } from './core/core.module';
+import { GreetingComponent } from './greeting/greeting.component';
+import { ColorPickerComponent } from './new-card/color-picker/color-picker.component';
 import { NewCardComponent } from './new-card/new-card.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { SharedModule } from './shared/shared.module';
+import { SignInComponent } from './sign-in/sign-in.component';
 import { ViewCardComponent } from './view-card/view-card.component';
-import { ColorPickerComponent } from './new-card/color-picker/color-picker.component';
-import { GreetingComponent } from './greeting/greeting.component';
 
 @NgModule({
   declarations: [
@@ -21,14 +24,17 @@ import { GreetingComponent } from './greeting/greeting.component';
     PageNotFoundComponent,
     NewCardComponent,
     ColorPickerComponent,
-    GreetingComponent
+    GreetingComponent,
+    SignInComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
     SharedModule,
     CoreModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule,
+    AppRoutingModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,50 +1,65 @@
 <div class="cards-page flexed col">
-    <nav class="page-header flexed padded">
-        <h3>cartões</h3>
-
-        <span class="spacer"></span>
-
-        <button class="btn circle text">
-            <i class="bi bi-grid-fill"></i>
-        </button>
-    </nav>
+  <nav class="page-header flexed padded">
+    <h3>cartões</h3>
 
     <span class="spacer"></span>
 
-    <div class="cards padded">
-        <app-card *ngFor="let card of cards" [routerLink]="card.id"></app-card>
+    <button class="btn circle text">
+      <i class="bi bi-grid-fill"></i>
+    </button>
+  </nav>
+
+  <span class="spacer"></span>
+
+  <div class="cards padded-x padded-05-y">
+    <app-card *ngFor="let card of cards" [routerLink]="card.id"></app-card>
+  </div>
+
+  <div class="controls padded-x flexed">
+    <span class="spacer"></span>
+
+    <button (click)="prev()" class="prev btn circle text">
+      <i class="bi bi-arrow-left small"></i>
+    </button>
+
+    <div class="sized-box-05"></div>
+
+    <button (click)="next()" class="btn circle text">
+      <i class="bi bi-arrow-right medium"></i>
+    </button>
+  </div>
+  <div class="sized-box"></div>
+
+  <span class="spacer"></span>
+
+  <footer class="cards-footer flexed padded">
+    <div class="info flexed col">
+      <h3 class="padded-05-y">350</h3>
+
+      <h2>
+        <a href="#">the</a>
+        <span class="padded-05-x">/</span>
+        <a href="#">me</a>
+      </h2>
     </div>
 
     <span class="spacer"></span>
 
-    <footer class="cards-footer flexed padded">
-        <div class="info flexed col">
-            <h3 class="padded-05-y">350</h3>
 
-            <h2>
-                <a href="#">the</a>
-                <span class="padded-05-x">/</span>
-                <a href="#">me</a>
-            </h2>
-        </div>
+    <div class="controls flexed">
+      <div class="flexed end col">
+        <button routerLink="/new-card" class="btn circle primary">
+          <i class="bi bi-plus"></i>
+        </button>
+      </div>
 
-        <span class="spacer"></span>
+      <div class="sized-box"></div>
 
-
-        <div class="controls flexed">
-            <div class="flexed end col">
-                <button routerLink="/new-card" class="btn circle primary">
-                    <i class="bi bi-plus"></i>
-                </button>
-            </div>
-
-            <!-- <div class="sized-box"></div>
-
-            <div class="flexed end col">
-                <button class="btn circle primary">
-                    <i class="bi bi-list"></i>
-                </button>
-            </div> -->
-        </div>
-    </footer>
+      <div class="flexed end col">
+        <button class="btn circle primary">
+          <i class="bi bi-list medium"></i>
+        </button>
+      </div>
+    </div>
+  </footer>
 </div>

@@ -1,0 +1,40 @@
+<div class="signin-page flexed col padded">
+  <div class="page-header flexed center">
+    <h3>Login</h3>
+  </div>
+
+  <span class="spacer"></span>
+
+  <div class="login-contianer flexed center">
+    <div class="login flexed col center">
+      <h3 class="info text-center">
+        Olá, login para ver os seus cartões
+      </h3>
+
+      <div class="flexed center">
+        <button (click)="googleSignIn()" class="btn circle primary">
+          <i class="bi bi-google small"></i>
+        </button>
+
+        <div class="sized-box-2"></div>
+
+        <button (click)="facebookSignIn()" class="btn circle primary">
+          <i class="bi bi-facebook"></i>
+        </button>
+      </div>
+
+      <div class="sized-box-2"></div>
+
+      <p class="error-message text-center">
+
+        {{ loginErrorMessage }} </p>
+
+      <div *ngIf="loading" class="loading-zone flexed center">
+        <app-loading-spinner></app-loading-spinner>
+      </div>
+    </div>
+  </div>
+
+  <span class="spacer"></span>
+
+</div>
