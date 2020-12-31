@@ -198,7 +198,8 @@ export class DatabaseService {
     return this._firestore.doc(`${collectionPath}/${id}`).set(
       {
         ...document,
-        lastUpdate: this._getServerTimeStamp,
+        // lastUpdate: this._getServerTimeStamp,
+        createdAt: this._getServerTimeStamp,
       },
       { merge: true }
     );

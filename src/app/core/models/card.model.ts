@@ -8,10 +8,22 @@ export interface CardModel {
         milliseconds: number;
         seconds: number;
     };
+    createdBy: string;
 }
 
 
-export function newCard(card: CardModel): CardModel {
+export function newCard(card: CardModel = {
+    id: '',
+    createdAt: {
+        milliseconds: new Date().getMilliseconds(),
+        seconds: new Date().getSeconds()
+    },
+    backgroundColor: '#fff',
+    backgroundImageUrl: '',
+    message: '',
+    textColor: '#000',
+    createdBy: 'test'
+}): CardModel {
     return card;
 }
 export function mockCard(): CardModel {
@@ -25,7 +37,8 @@ export function mockCard(): CardModel {
         createdAt: {
             milliseconds: newDate.getMilliseconds(),
             seconds: newDate.getSeconds()
-        }
+        },
+        createdBy: 'test'
     };
 }
 

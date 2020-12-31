@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
-import { CardModel, mockCard } from '../../core/models/card.model';
+import { CardModel } from '../../core/models/card.model';
 import { CardsService } from '../cards.service';
 
 @Component({
@@ -10,7 +10,6 @@ import { CardsService } from '../cards.service';
   styleUrls: ['./view-card.component.scss']
 })
 export class ViewCardComponent implements OnInit {
-  card: CardModel = mockCard();
   card$!: Observable<CardModel | null>;
 
   constructor (
@@ -30,5 +29,9 @@ export class ViewCardComponent implements OnInit {
 
   goBack(): void {
     this._router.navigateByUrl('/');
+  }
+
+  getDate(seconds: number): number {
+    return seconds * 1000;
   }
 }

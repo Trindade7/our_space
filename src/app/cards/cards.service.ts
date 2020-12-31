@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 import { DatabaseService } from '../core/database.service';
 import { CardModel } from '../core/models/card.model';
@@ -22,7 +23,9 @@ export class CardsService {
   }
 
   card$(id: string): Observable<CardModel | null> {
-    return this._dbSvc.docOrNull$(id, this._cardCollectionPath);
+    return this._dbSvc.docOrNull$<CardModel>(id, this._cardCollectionPath).pipe(
+      tap(card => console.log({ card }))
+    );
   }
 
   createCard(card: CardModel): Promise<void> {

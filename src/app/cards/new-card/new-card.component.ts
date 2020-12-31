@@ -1,9 +1,8 @@
 import { Location } from '@angular/common';
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { CardModel } from 'src/app/core/models/card.model';
 
+import { CardModel, newCard } from '../../core/models/card.model';
 import { CardsService } from '../cards.service';
-import { CardModel } from '../core/models/card.model';
 
 enum STATES {
   TEXT,
@@ -16,18 +15,10 @@ enum STATES {
   styleUrls: ['./new-card.component.scss']
 })
 export class NewCardComponent implements OnInit, AfterViewInit {
+  pageIsloading = false;
+
   @ViewChild('messageInput') messageInput!: ElementRef<HTMLTextAreaElement>;
-  card: CardModel = {
-    id: '',
-    createdAt: {
-      milliseconds: new Date().getMilliseconds(),
-      seconds: new Date().getSeconds()
-    },
-    backgroundColor: '#fff',
-    backgroundImageUrl: '',
-    message: '',
-    textColor: '#000',
-  };
+  card: CardModel = newCard();
   STATE_OPTIONS = STATES;
   currentState: STATES = STATES.TEXT;
   textColors: string[] = [
@@ -99,6 +90,14 @@ export class NewCardComponent implements OnInit, AfterViewInit {
 
   submitCard(): void {
     // TODO: validate card content
-    this._cardsSvc.createCard(this.card);
+    this.pageIsloading = true;
+    this._cardsSvc.createCard(this.card)
+      .then(() => {
+        this.card = newCard();
+        this.currentState = STATES.TEXT;
+      })
+      .finally(
+        () => this.pageIsloading = false
+      );
   }
 }
