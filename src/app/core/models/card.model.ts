@@ -22,7 +22,7 @@ export function newCard(card: CardModel = {
     backgroundImageUrl: '',
     message: '',
     textColor: '#000',
-    createdBy: 'test'
+    createdBy: 'testing'
 }): CardModel {
     return card;
 }
@@ -38,7 +38,7 @@ export function mockCard(): CardModel {
             milliseconds: newDate.getMilliseconds(),
             seconds: newDate.getSeconds()
         },
-        createdBy: 'test'
+        createdBy: 'testing'
     };
 }
 

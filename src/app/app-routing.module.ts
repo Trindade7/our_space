@@ -12,11 +12,11 @@ import { SignInComponent } from './sign-in/sign-in.component';
 const routes: Routes = [
   { path: 'login', component: SignInComponent },
   { path: 'hello', component: GreetingComponent, canActivate: [AuthGuard] },
-  { path: 'cards/:id', component: ViewCardComponent },
-  { path: 'cards', component: CardsComponent },
-  { path: 'new-card', component: NewCardComponent },
-  { path: '', pathMatch: 'full', redirectTo: 'cards' },
-  { path: '**', component: PageNotFoundComponent }
+  { path: 'cards/:id', component: ViewCardComponent, canActivate: [AuthGuard] },
+  { path: 'cards', component: CardsComponent, canActivate: [AuthGuard] },
+  { path: 'new-card', component: NewCardComponent, canActivate: [AuthGuard] },
+  { path: '', pathMatch: 'full', redirectTo: 'cards', canActivate: [AuthGuard] },
+  { path: '**', component: PageNotFoundComponent, canActivate: [AuthGuard] }
 ];
 
 @NgModule({

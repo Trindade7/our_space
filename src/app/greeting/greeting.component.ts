@@ -7,10 +7,12 @@ import { Component, OnInit } from '@angular/core';
 export class GreetingComponent implements OnInit {
   started = false;
   messageArray: string[] = [
-    'Nulla anim proident lam laboris tempor ad duis.',
-    'Ea aliqua laboris do ut incididunt ipsum eiusmod et.',
-    'Voluptate consequat excepteur ea elit reprehenderit dolor nisi do exercitation.',
-    'Fugiat elit ut velit rud nulla.'
+    'I really wanted to gift you something but, unfortunately I can’t do that right now  :(',
+    'So I decided to gift “Us” something for the time being.',
+    'Every week, I’ll write you a special message here untill we meet.',
+    'You are welcome to do the same :)',
+    'And remember...',
+    "EU TE AMO | I love you | Je t'aime | あなたを愛しています",
   ];
   activeMessage!: string;
   showMessage = false;

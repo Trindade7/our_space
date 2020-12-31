@@ -38,7 +38,7 @@ export class AuthService {
 
     if (credential.additionalUserInfo?.isNewUser) {
       const user = this._parseFireUserToUser(credential.user);
-      return this._db.create(user, user.id);
+      return this._db.create(user, 'users', user.id);
     }
 
     return Promise.resolve();
@@ -57,6 +57,35 @@ export class AuthService {
     return this.userOrNull$.pipe(
       map(userOrNull => !!userOrNull)
     );
+  }
+
+  async user(): Promise<UserModel> {
+    logger.collapsed('[auth.service] user()', ['getting user']);
+    const uid = await this.userOrNull$.pipe(
+      map(userOrNull => {
+
+        logger.collapsed('[auth.service] user() =>await uid', ['getting user', { userOrNull }]);
+        return userOrNull;
+      })
+    ).toPromise();
+
+    logger.collapsed('[auth.service] user()', ['got uid', { uid }]);
+
+    if (!uid) {
+      throw new Error('suth failure');
+    }
+
+    const user = await this._db.docOrNull$<UserModel>(uid.id, 'users').toPromise();
+
+    logger.collapsed('[auth.service] user()', ['got user', { user }]);
+
+    if (!user) {
+      throw new Error('No user data');
+    }
+
+    logger.collapsed('[auth.service] user()', ['got uid']);
+
+    return user;
   }
 
   async googleSignIn(): Promise<void> {

@@ -23,7 +23,7 @@ export class SignInComponent implements OnInit {
   googleSignIn(): void {
     this.loading = true;
     this._authSvc.googleSignIn().then(
-      () => this._router.navigateByUrl('/'),
+      () => this._router.navigateByUrl('/hello'),
     ).catch(err => {
       console.log(err);
       this.loginErrorMessage = err.message ?? 'Login error';
@@ -33,7 +33,7 @@ export class SignInComponent implements OnInit {
   facebookSignIn(): void {
     this.loading = true;
     this._authSvc.facebookSignIn().then(
-      () => this._router.navigateByUrl('/'),
+      () => this._router.navigateByUrl('/hello'),
     ).catch(err => {
       console.log(err);
       this.loginErrorMessage = err.message ?? 'Login error';
