@@ -26,7 +26,7 @@ export interface BatchDocModel {
 })
 export class DatabaseService {
   private _defaultQuery: CollectionQueryModel = {
-    // orderBy: null,
+    orderBy: 'createdAt',
     // orderDirection: null,
     // limitToLast: 10,
     limit: 10,
@@ -80,19 +80,11 @@ export class DatabaseService {
 
     return this._firestore
       .collection<T>(path, ref => {
-        let collectionRef = query.limitToLast
-          ? ref.limitToLast(query.limitToLast)
-          : ref.limit(query.limit ?? 10);
-
-        // collectionRef = query.orderBy
-        //   ? collectionRef.orderBy(query.orderBy)
-        //   : collectionRef;
-
-        collectionRef = query.where
-          ? collectionRef.where('category', '==', 'pronducts')
-          : collectionRef;
-
-        return collectionRef;
+        return ref.limitToLast(query.limitToLast ?? 10)
+          .orderBy(
+            query.orderBy ?? 'createdAt',
+            query.orderDirection ?? 'desc'
+          );
       })
       .valueChanges({ idField: 'id' })
       .pipe(
@@ -198,6 +190,10 @@ export class DatabaseService {
     ]);
 
     const id: string = docId ?? this.createId();
+    if ((document as any).id) {
+      logger.collapsed('[database.service] create', [{ document }, 'deleting id']);
+      delete ((document as any).id);
+    }
 
     return this._firestore.doc(`${collectionPath}/${id}`).set(
       {

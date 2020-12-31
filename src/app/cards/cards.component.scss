@@ -1,10 +1,22 @@
-.cards-page{
-    height: 100%;
+.cards-page {
+  height: 100%;
 }
 
-.cards{
-    height: 500px;
-    overflow: hidden;
-    font-size: 1.4rem;
-    position: relative;
+.cards {
+  height: 500px;
+  overflow: hidden;
+  font-size: 1.4rem;
+  position: relative;
+  gap: 1rem;
+  overflow-x: auto;
+
+  .card {
+    flex: none;
+    width: 320px;
+    max-width: 85vw;
+  }
+}
+
+.cards-controls {
+  display: none;
 }

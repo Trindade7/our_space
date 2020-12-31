@@ -11,11 +11,13 @@
 
   <span class="spacer"></span>
 
-  <div class="cards padded-x padded-05-y">
-    <app-card *ngFor="let card of cards" [routerLink]="card.id"></app-card>
+  <div class="cards flexed padded-x padded-05-y" *ngIf="(cards$ |async) as cards; else noCardsTemplate">
+    <div *ngFor="let card of cards" class="card">
+      <app-card [card]="card" [routerLink]="card.id"></app-card>
+    </div>
   </div>
 
-  <div class="controls padded-x flexed">
+  <div *ngIf="cards$ |async" class="cards-controls padded-x flexed">
     <span class="spacer"></span>
 
     <button (click)="prev()" class="prev btn circle text">
@@ -28,6 +30,18 @@
       <i class="bi bi-arrow-right medium"></i>
     </button>
   </div>
+
+
+  <ng-template #noCardsTemplate>
+    <div class="cards flexed col center padded-x">
+      <h1>You don't have any cards yet, start creating</h1>
+
+      <button routerLink="/new-card" class="btn primary">
+        new card
+      </button>
+    </div>
+  </ng-template>
+
   <div class="sized-box"></div>
 
   <span class="spacer"></span>

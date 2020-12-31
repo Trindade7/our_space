@@ -7,14 +7,14 @@ import { environment } from 'src/environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CardsComponent } from './cards/cards.component';
+import { ColorPickerComponent } from './cards/new-card/color-picker/color-picker.component';
+import { NewCardComponent } from './cards/new-card/new-card.component';
+import { ViewCardComponent } from './cards/view-card/view-card.component';
 import { CoreModule } from './core/core.module';
 import { GreetingComponent } from './greeting/greeting.component';
-import { ColorPickerComponent } from './new-card/color-picker/color-picker.component';
-import { NewCardComponent } from './new-card/new-card.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { SharedModule } from './shared/shared.module';
 import { SignInComponent } from './sign-in/sign-in.component';
-import { ViewCardComponent } from './view-card/view-card.component';
 
 @NgModule({
   declarations: [

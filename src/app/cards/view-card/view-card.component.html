@@ -1,0 +1,19 @@
+<div *ngIf="card$ |async as card" class="view-card-page flexed col">
+  <nav class="page-header flexed padded">
+    <h3>{{card.createdAt.seconds | date }}</h3>
+
+    <span class="spacer"></span>
+
+    <button (click)="goBack()" class="btn circle text">
+      <i class="bi bi-x"></i>
+    </button>
+  </nav>
+
+  <span class="spacer"></span>
+
+  <div class="card-container padded">
+    <app-card [card]="card"></app-card>
+  </div>
+
+  <span class="spacer"></span>
+</div>

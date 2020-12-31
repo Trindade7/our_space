@@ -1,15 +1,20 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 
-import { CardModel, mockCard } from '../core/models/card.model';
+import { CardModel } from '../core/models/card.model';
+import { CardsService } from './cards.service';
 
 @Component({
   templateUrl: './cards.component.html',
   styleUrls: ['./cards.component.scss']
 })
 export class CardsComponent implements OnInit {
-  cards: CardModel[] = [mockCard()];
+  // cards: CardModel[] = [mockCard()];
+  cards$: Observable<CardModel[]>;
 
-  constructor () { }
+  constructor (private _cardsSvc: CardsService) {
+    this.cards$ = this._cardsSvc.cards;
+  }
 
   ngOnInit(): void {
   }

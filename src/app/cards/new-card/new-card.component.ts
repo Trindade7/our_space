@@ -1,6 +1,8 @@
 import { Location } from '@angular/common';
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { CardModel } from 'src/app/core/models/card.model';
 
+import { CardsService } from '../cards.service';
 import { CardModel } from '../core/models/card.model';
 
 enum STATES {
@@ -17,7 +19,7 @@ export class NewCardComponent implements OnInit, AfterViewInit {
   @ViewChild('messageInput') messageInput!: ElementRef<HTMLTextAreaElement>;
   card: CardModel = {
     id: '',
-    dateCreated: {
+    createdAt: {
       milliseconds: new Date().getMilliseconds(),
       seconds: new Date().getSeconds()
     },
@@ -40,7 +42,9 @@ export class NewCardComponent implements OnInit, AfterViewInit {
     'green'
   ];
 
-  constructor (private _location: Location) { }
+  pickingColor = true;
+
+  constructor (private _location: Location, private _cardsSvc: CardsService) { }
   ngOnInit(): void { }
 
   ngAfterViewInit() {
@@ -67,6 +71,11 @@ export class NewCardComponent implements OnInit, AfterViewInit {
     }
   }
 
+  selectPicker(picker: 'color' | 'background' = 'color') {
+    picker === 'color' ? this.pickingColor = true
+      : this.pickingColor = false;
+  }
+
   setBackground(background: string): void {
     console.log(this.card);
     const newCard = { ...this.card };
@@ -86,5 +95,10 @@ export class NewCardComponent implements OnInit, AfterViewInit {
     const newCard = { ...this.card };
     newCard.textColor = color;
     this.card = newCard;
+  }
+
+  submitCard(): void {
+    // TODO: validate card content
+    this._cardsSvc.createCard(this.card);
   }
 }

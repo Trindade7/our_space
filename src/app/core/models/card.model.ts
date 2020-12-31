@@ -4,7 +4,7 @@ export interface CardModel {
     textColor: string;
     backgroundColor: string;
     backgroundImageUrl: string;
-    dateCreated: {
+    createdAt: {
         milliseconds: number;
         seconds: number;
     };
@@ -22,7 +22,7 @@ export function mockCard(): CardModel {
         textColor: randomColor(),
         backgroundColor: randomColor(),
         backgroundImageUrl: 'https://placehold.it/100x100?text=user%20avatar',
-        dateCreated: {
+        createdAt: {
             milliseconds: newDate.getMilliseconds(),
             seconds: newDate.getSeconds()
         }

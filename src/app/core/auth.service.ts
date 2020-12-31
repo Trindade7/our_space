@@ -3,7 +3,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import firebase from 'firebase/app';
 import { Observable, of } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 
 import { DatabaseService } from './database.service';
 import { Logger as logger } from './logger';
@@ -50,6 +50,12 @@ export class AuthService {
         ? this._db.docOrNull$<UserModel>(user.uid, 'users')
         : of(null)
       )
+    );
+  }
+
+  get isSignedIn(): Observable<boolean> {
+    return this.userOrNull$.pipe(
+      map(userOrNull => !!userOrNull)
     );
   }
 
