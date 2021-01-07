@@ -1,5 +1,5 @@
-<div class="card padded" [ngStyle]="{
-    'background-image': 'url(' + card.backgroundImageUrl +')' ,
+<!-- <div class="card padded" [ngStyle]="{
+    'background-image': 'url(' +  '/assets/cards/backgrounds/chilling-boy.png' +')' ,
     'background-color': card.backgroundColor,
     'color': card.textColor
 }">
@@ -9,5 +9,21 @@
   <p class="message">
     {{card.message}}
   </p>
+</div> -->
 
+<div class="card padded" [ngStyle]="{
+  'background-color': card.backgroundColor,
+  'background-image': 'url(' + card.backgroundImageUrl +')' ,
+  'background-size': card.backgroundSize + 'px',
+  'background-repeat': card.backgroundRepeat,
+  'background-position-x': card.backgroundPositionX,
+  'background-position-y': card.backgroundPositionY,
+  'color': card.textColor
+}">
+  <div class="sized-box-4"></div>
+  <div class="sized-box-4"></div>
+
+  <p class="message" [ngStyle]="{'-webkit-text-stroke':'0.5px ' + card.textStrokeColor}">
+    {{card.message}}
+  </p>
 </div>

@@ -35,7 +35,7 @@
         <i class="bi bi-arrow-right"></i>
       </button>
 
-      <button *ngIf="currentState === STATE_OPTIONS.PREVIEW" (click)="submitCard()" class="btn circle text"
+      <button *ngIf="currentState === STATE_OPTIONS.PREVIEW" (click)="submitCard()" class="btn accent circle text"
         [disabled]="card.message.length < 5">
         <i class="bi bi-check-circle-fill"></i>
       </button>
@@ -130,9 +130,8 @@
     <div class="sized-box"></div>
 
     <div class="flexed center padded">
-      <button (click)="submitCard()" class="btn icon outline" [disabled]="card.message.length < 5">
-        <i class="bi bi-check"></i>
-        <span>Publicar</span>
+      <button (click)="submitCard()" class="btn outline accent" [disabled]="card.message.length < 5">
+        <span>PUBLICAR</span>
       </button>
     </div>
     <span class="spacer"></span>

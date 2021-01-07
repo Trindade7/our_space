@@ -2,28 +2,44 @@ export interface CardModel {
     id: string;
     message: string;
     textColor: string;
+    textStrokeColor: string;
     backgroundColor: string;
     backgroundImageUrl: string;
+    backgroundSize: number;
+    backgroundRepeat: 'no-repeat' | 'repeat' | 'repeat-x' | 'repeat-y';
+    backgroundPositionX: 'left' | 'center' | 'right';
+    backgroundPositionY: 'top' | 'center' | 'bottom';
     createdAt: {
         milliseconds: number;
         seconds: number;
     };
     createdBy: string;
+    creator?: {
+        name: string,
+        email: string;
+    };
 }
 
 
-export function newCard(card: CardModel = {
-    id: '',
-    createdAt: {
-        milliseconds: new Date().getMilliseconds(),
-        seconds: new Date().getSeconds()
-    },
-    backgroundColor: '#fff',
-    backgroundImageUrl: '',
-    message: '',
-    textColor: '#000',
-    createdBy: 'testing'
-}): CardModel {
+export function newCard(cardIn?: CardModel): CardModel {
+    const card = Object.assign({
+        id: '',
+        createdAt: {
+            milliseconds: new Date().getMilliseconds(),
+            seconds: new Date().getSeconds()
+        },
+        backgroundColor: '#fff',
+        backgroundImageUrl: '',
+        backgroundSize: 400,
+        backgroundRepeat: 'no-repeat',
+        backgroundPositionX: 'left',
+        backgroundPositionY: 'bottom',
+        message: '',
+        textColor: '#000',
+        textStrokeColor: 'transparent',
+        createdBy: 'testing'
+    }, cardIn);
+
     return card;
 }
 export function mockCard(): CardModel {
@@ -31,9 +47,14 @@ export function mockCard(): CardModel {
     return {
         id: randomString(3, ''),
         message: randomString(100),
+        textStrokeColor: 'transparent',
         textColor: randomColor(),
         backgroundColor: randomColor(),
         backgroundImageUrl: 'https://placehold.it/100x100?text=user%20avatar',
+        backgroundSize: 400,
+        backgroundRepeat: 'no-repeat',
+        backgroundPositionX: 'left',
+        backgroundPositionY: 'bottom',
         createdAt: {
             milliseconds: newDate.getMilliseconds(),
             seconds: newDate.getSeconds()

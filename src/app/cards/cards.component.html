@@ -21,6 +21,7 @@
     <div *ngFor="let card of cards" class="card">
       <app-card [card]="card" [routerLink]="card.id"></app-card>
     </div>
+    <div class="sized-box-05 flex-none"></div>
 
     <ng-template *ngIf="!cards.length">
       <div class="cards flexed col center padded-x">
