@@ -1,8 +1,9 @@
 import { Location } from '@angular/common';
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { CardModel, newCard } from '../../core/models/card.model';
-import { CardsService } from '../cards.service';
+import { CardsManagementService } from './cards-management.service';
 
 enum STATES {
   TEXT,
@@ -33,9 +34,13 @@ export class NewCardComponent implements OnInit, AfterViewInit {
     'green'
   ];
 
-  pickingColor = true;
+  pickingColor = false;
 
-  constructor (private _location: Location, private _cardsSvc: CardsService) { }
+  constructor (
+    private _location: Location,
+    private _router: Router,
+    private _cardsSvc: CardsManagementService
+  ) { }
   ngOnInit(): void { }
 
   ngAfterViewInit() {
@@ -94,7 +99,7 @@ export class NewCardComponent implements OnInit, AfterViewInit {
     this._cardsSvc.createCard(this.card)
       .then(() => {
         this.card = newCard();
-        this.currentState = STATES.TEXT;
+        this._router.navigateByUrl('/cards');
       })
       .finally(
         () => this.pageIsloading = false

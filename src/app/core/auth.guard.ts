@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { map, take, tap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
 
 import { AuthService } from './auth.service';
 
@@ -15,15 +14,16 @@ export class AuthGuard implements CanActivate {
   ) { }
 
   canActivate(): Observable<boolean> {
-    return this._auth.userOrNull$.pipe(
-      take(1),
-      map(userOrNull => !!userOrNull),
-      tap(signedIn => {
-        if (!signedIn) {
-          console.log('NOT logged in, REDIRECTING');
-          this._router.navigate(['/login']);
-        }
-      })
-    );
+    return of(true);
+    // return this._auth.userOrNull$.pipe(
+    //   take(1),
+    //   map(userOrNull => !!userOrNull),
+    //   tap(signedIn => {
+    //     if (!signedIn) {
+    //       console.log('NOT logged in, REDIRECTING');
+    //       this._router.navigate(['/login']);
+    //     }
+    //   })
+    // );
   }
 }

@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { CardsComponent } from './cards/cards.component';
-import { NewCardComponent } from './cards/new-card/new-card.component';
 import { ViewCardComponent } from './cards/view-card/view-card.component';
 import { AuthGuard } from './core/auth.guard';
 import { GreetingComponent } from './greeting/greeting.component';
@@ -14,7 +13,13 @@ const routes: Routes = [
   { path: 'hello', component: GreetingComponent, canActivate: [AuthGuard] },
   { path: 'cards/:id', component: ViewCardComponent, canActivate: [AuthGuard] },
   { path: 'cards', component: CardsComponent, canActivate: [AuthGuard] },
-  { path: 'new-card', component: NewCardComponent, canActivate: [AuthGuard] },
+
+  {
+    path: 'creator',
+    loadChildren: () => import('./creator/creator.module').then(m => m.CreatorModule),
+    canActivate: [AuthGuard]
+  },
+
   { path: '', pathMatch: 'full', redirectTo: 'cards', canActivate: [AuthGuard] },
   { path: '**', component: PageNotFoundComponent, canActivate: [AuthGuard] }
 ];

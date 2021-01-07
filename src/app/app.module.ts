@@ -1,14 +1,11 @@
 import { NgModule } from '@angular/core';
 import { AngularFireModule } from '@angular/fire';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { environment } from 'src/environments/environment';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CardsComponent } from './cards/cards.component';
-import { ColorPickerComponent } from './cards/new-card/color-picker/color-picker.component';
-import { NewCardComponent } from './cards/new-card/new-card.component';
 import { ViewCardComponent } from './cards/view-card/view-card.component';
 import { CoreModule } from './core/core.module';
 import { GreetingComponent } from './greeting/greeting.component';
@@ -22,8 +19,6 @@ import { SignInComponent } from './sign-in/sign-in.component';
     CardsComponent,
     ViewCardComponent,
     PageNotFoundComponent,
-    NewCardComponent,
-    ColorPickerComponent,
     GreetingComponent,
     SignInComponent
   ],
@@ -32,8 +27,6 @@ import { SignInComponent } from './sign-in/sign-in.component';
     AngularFireModule.initializeApp(environment.firebaseConfig),
     SharedModule,
     CoreModule,
-    FormsModule,
-    ReactiveFormsModule,
     AppRoutingModule,
   ],
   providers: [],

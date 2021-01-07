@@ -11,13 +11,29 @@
 
   <span class="spacer"></span>
 
-  <div class="cards flexed padded-x padded-05-y" *ngIf="(cards$ |async) as cards; else noCardsTemplate">
-    <div *ngFor="let card of cards" class="card">
-      <app-card [card]="card" [routerLink]="card.id"></app-card>
+  <div class="cards flexed padded-x padded-05-y" *ngIf="!(cards$ |async)">
+    <div class="loading-zone flexed center">
+      <app-loading-spinner></app-loading-spinner>
     </div>
   </div>
 
-  <div *ngIf="cards$ |async" class="cards-controls padded-x flexed">
+  <div class="cards flexed padded-x padded-05-y" *ngIf="(cards$ |async) as cards">
+    <div *ngFor="let card of cards" class="card">
+      <app-card [card]="card" [routerLink]="card.id"></app-card>
+    </div>
+
+    <ng-template *ngIf="!cards.length">
+      <div class="cards flexed col center padded-x">
+        <h1>You don't have any cards yet, start creating</h1>
+
+        <button routerLink="/creator/new-card" class="btn primary">
+          new card
+        </button>
+      </div>
+    </ng-template>
+  </div>
+
+  <!-- <div *ngIf="(cards$ |async).length" class="cards-controls padded-x flexed">
     <span class="spacer"></span>
 
     <button (click)="prev()" class="prev btn circle text">
@@ -29,18 +45,7 @@
     <button (click)="next()" class="btn circle text">
       <i class="bi bi-arrow-right medium"></i>
     </button>
-  </div>
-
-
-  <ng-template #noCardsTemplate>
-    <div class="cards flexed col center padded-x">
-      <h1>You don't have any cards yet, start creating</h1>
-
-      <button routerLink="/new-card" class="btn primary">
-        new card
-      </button>
-    </div>
-  </ng-template>
+  </div> -->
 
   <div class="sized-box"></div>
 
@@ -48,13 +53,15 @@
 
   <footer class="cards-footer flexed padded">
     <div class="info flexed col">
-      <h3 class="padded-05-y">350</h3>
+      <span>from</span>
 
-      <h2>
-        <a href="#">the</a>
-        <span class="padded-05-x">/</span>
-        <a href="#">me</a>
-      </h2>
+      <div class="cards-filter">
+        <b class="filter-name inline">you</b>
+        <span class="padded-05-x">|</span>
+        <b class="filter-name">me</b>
+        <span class="padded-05-x">|</span>
+        <b class="filter-name active">us</b>
+      </div>
     </div>
 
     <span class="spacer"></span>
@@ -62,7 +69,7 @@
 
     <div class="controls flexed">
       <div class="flexed end col">
-        <button routerLink="/new-card" class="btn circle primary">
+        <button routerLink="/creator/new-card" class="btn raised circle primary">
           <i class="bi bi-plus"></i>
         </button>
       </div>
@@ -70,8 +77,8 @@
       <div class="sized-box"></div>
 
       <div class="flexed end col">
-        <button class="btn circle primary">
-          <i class="bi bi-list medium"></i>
+        <button routerLink="/hello" class="btn raised circle primary">
+          <i class="bi bi-heart-fill small"></i>
         </button>
       </div>
     </div>

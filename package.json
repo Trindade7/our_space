@@ -9,6 +9,8 @@
     "lint": "gts lint",
     "e2e": "ng e2e",
     "build:prod": "ng build --prod --aot --build-optimizer && gzipper c --verbose ./dist",
+    "build:stats": "ng build --stats-json",
+    "analyze": "webpack-bundle-analyzer dist/our-space/stats.json",
     "clean": "gts clean",
     "compile": "tsc",
     "fix": "gts fix",

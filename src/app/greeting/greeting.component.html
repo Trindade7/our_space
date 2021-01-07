@@ -1,31 +1,31 @@
 <div class="greeting-container flexed col center padded">
-    <div class="view-message" *ngIf="started; else notStartedTemplate">
+  <div class="view-message" *ngIf="started; else notStartedTemplate">
 
-        <div class="message" [ngClass]="{'active': showMessage}">
-            <b>{{activeMessage}}</b>
-        </div>
-
-        <div class="controls padded flexed center" *ngIf="showControls">
-            <button (click)="greet()" class="btn text">
-                <i class="bi bi-arrow-repeat"></i>
-            </button>
-
-            <div class="sized-box"></div>
-
-            <a [routerLink]="['/cards']" routerLinkActive="router-link-active" class="btn text">
-                Ver cartões
-            </a>
-        </div>
-
+    <div class="message" [ngClass]="{'active': showMessage}">
+      <b>{{activeMessage}}</b>
     </div>
 
-    <ng-template #notStartedTemplate>
-        <div class="init">
-            <h1 class="padded">Olá Xinha</h1>
-            <button (click)="greet()" class="btn text">
-                START
-            </button>
-        </div>
-    </ng-template>
+    <div class="controls padded flexed center" *ngIf="showControls">
+      <button (click)="greet()" class="btn text">
+        <i class="bi bi-arrow-repeat"></i>
+      </button>
+
+      <div class="sized-box"></div>
+
+      <a [routerLink]="['/cards']" routerLinkActive="router-link-active" class="btn outline">
+        Ver cartões
+      </a>
+    </div>
+
+  </div>
+
+  <ng-template #notStartedTemplate>
+    <div class="init">
+      <h1 class="padded">Olá Xinha</h1>
+      <button (click)="greet()" class="btn outline">
+        START
+      </button>
+    </div>
+  </ng-template>
 
 </div>
