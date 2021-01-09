@@ -1,20 +1,28 @@
-<div *ngIf="card$ |async as card" class="view-card-page flexed col">
-  <nav class="page-header flexed padded">
-    <h3>{{getDate(card.createdAt.seconds) | date }}</h3>
+<div class="page">
+  <div *ngIf="card$ |async as card; else loadingTemplate" class="view-card-page flexed col">
+    <nav class="page-header flexed padded">
+      <h3>{{getDate(card.createdAt.seconds) | date }}</h3>
+
+      <span class="spacer"></span>
+
+      <button (click)="goBack()" class="btn circle text">
+        <i class="bi bi-x"></i>
+      </button>
+    </nav>
 
     <span class="spacer"></span>
 
-    <button (click)="goBack()" class="btn circle text">
-      <i class="bi bi-x"></i>
-    </button>
-  </nav>
+    <div class="card-container padded">
+      <app-card [card]="card"></app-card>
+    </div>
+    <span class="padded-x">From: <b class="text-accent">{{card.createdBy}}</b></span>
 
-  <span class="spacer"></span>
-
-  <div class="card-container padded">
-    <app-card [card]="card"></app-card>
+    <span class="spacer"></span>
   </div>
-  <span class="padded-x">From: <b class="text-accent">{{card.createdBy}}</b></span>
 
-  <span class="spacer"></span>
+  <ng-template #loadingTemplate>
+    <!-- <div class="loading-zone flexed center">
+      <app-loading-spinner></app-loading-spinner>
+    </div> -->
+  </ng-template>
 </div>

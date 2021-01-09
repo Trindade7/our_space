@@ -75,14 +75,14 @@ export class NewCardComponent implements OnInit, AfterViewInit {
   setBackground(background: string): void {
     console.log(this.card);
     const newCard = { ...this.card };
-    newCard.backgroundColor = background;
+    newCard.background.color = background;
     this.card = newCard;
   }
 
   setBackgroundColor(background: string): void {
     console.log(this.card);
     const newCard = { ...this.card };
-    newCard.backgroundColor = background;
+    newCard.background.color = background;
     this.card = newCard;
   }
 

@@ -1,0 +1,26 @@
+.image-preview {
+  position: relative;
+  height: calc(100vh - 400px);
+
+  .image-selector.hide {
+    display: none;
+  }
+}
+
+
+.image-input {
+  display: none;
+}
+
+.controls {
+
+  .size {
+    .size-input {
+      width: 100px;
+    }
+  }
+
+  .position {
+    flex-wrap: wrap;
+  }
+}

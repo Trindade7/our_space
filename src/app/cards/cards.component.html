@@ -4,22 +4,17 @@
 
     <span class="spacer"></span>
 
-    <button class="btn circle text">
+    <!-- <button class="btn circle text">
       <i class="bi bi-grid-fill"></i>
-    </button>
+    </button> -->
+    <i class="bi bi-grid-fill"></i>
   </nav>
 
   <span class="spacer"></span>
 
-  <div class="cards flexed padded-x padded-05-y" *ngIf="!(cards$ |async)">
-    <div class="loading-zone flexed center">
-      <app-loading-spinner></app-loading-spinner>
-    </div>
-  </div>
-
-  <div class="cards flexed padded-x padded-05-y" *ngIf="(cards$ |async) as cards">
+  <div class="cards flexed padded-x padded-05-y" *ngIf="cards$ |async as cards; else loadingCardsTemplate">
     <div *ngFor="let card of cards" class="card">
-      <app-card [card]="card" [routerLink]="card.id"></app-card>
+      <app-card tabindex="2" [card]="card" [routerLink]="card.id"></app-card>
     </div>
     <div class="sized-box-05 flex-none"></div>
 
@@ -33,6 +28,14 @@
       </div>
     </ng-template>
   </div>
+
+  <ng-template #loadingCardsTemplate>
+    <div class="cards flexed padded-x padded-05-y">
+      <div class="loading-zone flexed center">
+        <app-loading-spinner></app-loading-spinner>
+      </div>
+    </div>
+  </ng-template>
 
   <!-- <div *ngIf="(cards$ |async).length" class="cards-controls padded-x flexed">
     <span class="spacer"></span>
@@ -70,7 +73,7 @@
 
     <div class="controls flexed">
       <div class="flexed end col">
-        <button routerLink="/creator/new-card" class="btn raised circle primary">
+        <button routerLink="/creator/new-card" aria-label="new card" class="btn raised circle primary">
           <i class="bi bi-plus"></i>
         </button>
       </div>
@@ -78,7 +81,7 @@
       <div class="sized-box"></div>
 
       <div class="flexed end col">
-        <button routerLink="/hello" class="btn raised circle primary">
+        <button routerLink="/hello" aria-label="play hello message" class="btn raised circle primary">
           <i class="bi bi-heart-fill small"></i>
         </button>
       </div>

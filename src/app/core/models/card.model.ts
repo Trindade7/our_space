@@ -1,14 +1,18 @@
+export interface CardBackgroungModel {
+    color: string;
+    imageUrl: string;
+    size: number;
+    repeat: 'no-repeat' | 'repeat' | 'repeat-x' | 'repeat-y';
+    positionX: 'left' | 'center' | 'right';
+    positionY: 'top' | 'center' | 'bottom';
+}
+
 export interface CardModel {
     id: string;
     message: string;
     textColor: string;
     textStrokeColor: string;
-    backgroundColor: string;
-    backgroundImageUrl: string;
-    backgroundSize: number;
-    backgroundRepeat: 'no-repeat' | 'repeat' | 'repeat-x' | 'repeat-y';
-    backgroundPositionX: 'left' | 'center' | 'right';
-    backgroundPositionY: 'top' | 'center' | 'bottom';
+    background: CardBackgroungModel,
     createdAt: {
         milliseconds: number;
         seconds: number;
@@ -22,18 +26,20 @@ export interface CardModel {
 
 
 export function newCard(cardIn?: CardModel): CardModel {
-    const card = Object.assign({
+    const card: CardModel = Object.assign({
         id: '',
         createdAt: {
             milliseconds: new Date().getMilliseconds(),
             seconds: new Date().getSeconds()
         },
-        backgroundColor: '#fff',
-        backgroundImageUrl: '',
-        backgroundSize: 400,
-        backgroundRepeat: 'no-repeat',
-        backgroundPositionX: 'left',
-        backgroundPositionY: 'bottom',
+        background: {
+            color: '#fff',
+            imageUrl: '',
+            size: 400,
+            repeat: 'no-repeat',
+            positionX: 'left',
+            positionY: 'bottom',
+        },
         message: '',
         textColor: '#000',
         textStrokeColor: 'transparent',
@@ -42,6 +48,7 @@ export function newCard(cardIn?: CardModel): CardModel {
 
     return card;
 }
+
 export function mockCard(): CardModel {
     const newDate = new Date();
     return {
@@ -49,17 +56,23 @@ export function mockCard(): CardModel {
         message: randomString(100),
         textStrokeColor: 'transparent',
         textColor: randomColor(),
-        backgroundColor: randomColor(),
-        backgroundImageUrl: 'https://placehold.it/100x100?text=user%20avatar',
-        backgroundSize: 400,
-        backgroundRepeat: 'no-repeat',
-        backgroundPositionX: 'left',
-        backgroundPositionY: 'bottom',
+        background: mockBackground(),
         createdAt: {
             milliseconds: newDate.getMilliseconds(),
             seconds: newDate.getSeconds()
         },
         createdBy: 'testing'
+    };
+}
+
+export function mockBackground(): CardBackgroungModel {
+    return {
+        color: randomColor(),
+        imageUrl: 'https://placehold.it/100x100?text=user%20avatar',
+        size: 400,
+        repeat: 'no-repeat',
+        positionX: 'left',
+        positionY: 'bottom',
     };
 }
 

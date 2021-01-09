@@ -1,0 +1,102 @@
+<div class="admin-page  flexed col">
+  <nav class="page-header flexed padded">
+    <button (click)="goBack()" class="btn circle text">
+      <i class="bi bi-x"></i>
+    </button>
+    <h3>Texto</h3>
+
+    <span class="spacer"></span>
+
+    <button (click)="submitBackground()" class="btn accent circle text" [disabled]="isValidBackground">
+      <i class="bi bi-check-circle-fill"></i>
+    </button>
+  </nav>
+
+  <div class="flexed col padded">
+    <div class="image-preview">
+      <app-card #previewCard (click)="imageInput.click()" [card]="newBackground.previewCard"></app-card>
+    </div>
+
+    <div class="image-selector flexed center" [ngClass]="{'hide': showPreview}">
+      <input (change)="handleFileInput($event)" #imageInput type="file" accept="image/*" class="image-input"
+        name="image-input" id="image-input">
+      <button (click)="imageInput.click()" class="btn outline text">
+        select image
+      </button>
+    </div>
+
+    <div class="controls">
+      <div class="size padded-y">
+        <h3 class="text-center ">size and repeat</h3>
+        <div class="flexed center padded">
+
+          <input [(ngModel)]="newBackground.size" type="number" min="50" max="1000" placeholder="width..."
+            class="size-input">
+
+          <div class="sized-box"></div>
+
+          <button (click)="newBackground.repeat='no-repeat'" class="btn circle text">
+            <i class="bi bi-square-fill"></i>
+          </button>
+
+          <div class="sized-box"></div>
+
+          <button (click)="newBackground.repeat='repeat-x'" class="btn circle text">
+            <i class="bi bi-distribute-horizontal"></i>
+          </button>
+
+          <div class="sized-box"></div>
+
+          <button (click)="newBackground.repeat='repeat-y'" class="btn circle text">
+            <i class="bi bi-distribute-vertical"></i>
+          </button>
+
+          <div class="sized-box"></div>
+          <button (click)="newBackground.repeat='repeat'" class="btn circle text">
+            <i class="bi bi-grid-3x3-gap-fill"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="position padded-y">
+        <h3 class="text-center ">Positoning</h3>
+        <div class="flexed center">
+          <div class="position-x padded flexed">
+            <button (click)="newBackground.positionX='left'" class="btn circle">
+              <i class="bi bi-arrow-left"></i>
+            </button>
+
+            <button (click)="newBackground.positionX='center'" class="btn circle">
+              <i class="bi bi-dot"></i>
+            </button>
+
+            <button (click)="newBackground.positionX='right'" class="btn circle">
+              <i class="bi bi-arrow-right"></i>
+            </button>
+          </div>
+
+          <div class="position-y  padded flexed">
+            <button (click)="newBackground.positionY='top'" class="btn circle">
+              <i class="bi bi-arrow-up"></i>
+            </button>
+
+            <button (click)="newBackground.positionY='center'" class="btn circle">
+              <i class="bi bi-dot"></i>
+            </button>
+
+            <button (click)="newBackground.positionY='bottom'" class="btn circle">
+              <i class="bi bi-arrow-up"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flexed center padded">
+      <button (click)="submitBackground()" class="btn outline accent" [disabled]="isValidBackground">
+        <span>PUBLICAR</span>
+      </button>
+    </div>
+    <span class="spacer"></span>
+  </div>
+</div>

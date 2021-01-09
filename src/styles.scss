@@ -170,6 +170,11 @@ p {
 }
 
 // *################### SIMPLE COMPONENTS
+.page {
+  height: 100vh;
+  position: relative;
+}
+
 .sized-box {
   width: 1rem;
   height: 1rem;

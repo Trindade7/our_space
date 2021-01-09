@@ -21,6 +21,7 @@ const routes: Routes = [
   },
 
   { path: '', pathMatch: 'full', redirectTo: 'cards', canActivate: [AuthGuard] },
+  { path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) },
   { path: '**', component: PageNotFoundComponent, canActivate: [AuthGuard] }
 ];
 

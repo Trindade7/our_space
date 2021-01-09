@@ -1,23 +1,10 @@
-<!-- <div class="card padded" [ngStyle]="{
-    'background-image': 'url(' +  '/assets/cards/backgrounds/chilling-boy.png' +')' ,
-    'background-color': card.backgroundColor,
-    'color': card.textColor
-}">
-  <div class="sized-box-4"></div>
-  <div class="sized-box-4"></div>
-
-  <p class="message">
-    {{card.message}}
-  </p>
-</div> -->
-
 <div class="card padded" [ngStyle]="{
-  'background-color': card.backgroundColor,
-  'background-image': 'url(' + card.backgroundImageUrl +')' ,
-  'background-size': card.backgroundSize + 'px',
-  'background-repeat': card.backgroundRepeat,
-  'background-position-x': card.backgroundPositionX,
-  'background-position-y': card.backgroundPositionY,
+  'background-color': card.background.color,
+  'background-image': 'url(' + card.background.imageUrl +')' ,
+  'background-size': card.background.size + 'px',
+  'background-repeat': card.background.repeat,
+  'background-position-x': card.background.positionX,
+  'background-position-y': card.background.positionY,
   'color': card.textColor
 }">
   <div class="sized-box-4"></div>
