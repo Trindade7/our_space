@@ -3,17 +3,16 @@ import { AfterViewInit, Component, OnInit, QueryList, ViewChildren } from '@angu
 import { CardBackgroungModel, CardModel, mockBackground, mockCard } from 'src/app/core/models/card.model';
 import { CardComponent } from 'src/app/shared/card/card.component';
 
+// TODO: COMPONENTALIZE
+
+type SelectedControl = 'size' | 'position';
 @Component({
   templateUrl: './new-background.component.html',
   styleUrls: ['./new-background.component.scss']
 })
 export class NewBackgroundComponent implements OnInit, AfterViewInit {
-  // @ViewChild('previewCardRef')
-  // @ViewChild('previewCardRef')
-  // private previewCardRef!: CardComponent;
-  @ViewChildren('previewCardRef')
+  @ViewChildren('previewCardRef') //TODO: change to Viewchild
   private cards!: QueryList<CardComponent>;
-
   private previewCardRef!: CardComponent;
 
   private _background: CardBackgroungModel = mockBackground();
@@ -22,21 +21,14 @@ export class NewBackgroundComponent implements OnInit, AfterViewInit {
   showPreview!: any;
   isValidBackground = false;
 
+  selectedControl: SelectedControl = 'size';
+
   constructor (private _location: Location) { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { }
 
   ngAfterViewInit(): void {
-    console.log(this.cards);
     this.previewCardRef = this.cards.first;
-    // // this._updatePreview = this.previewCardRef.reload;
-    // this.cards.changes.subscribe((comps: QueryList<CardComponent>) => {
-    //   console.log(comps);
-
-    //   this.previewCardRef = comps.first;
-    // });
-    // this._updatePreview = this.previewCardRef.reload;
   }
 
   goBack(): void {
@@ -72,7 +64,6 @@ export class NewBackgroundComponent implements OnInit, AfterViewInit {
   }
   set imageFileInput(file: File) {
     this.imageFile = file;
-
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => {
@@ -81,7 +72,7 @@ export class NewBackgroundComponent implements OnInit, AfterViewInit {
       this._updatePreview();
       return '';
     };
-    reader.onloadend = () => this._updatePreview();
+    this.isValidBackground = true;
   }
   set size(v: number) {
     console.log(v);

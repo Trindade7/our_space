@@ -17,7 +17,7 @@
       <app-card #previewCardRef (click)="imageInput.click()" [card]="previewCard"></app-card>
     </div>
 
-    <div class="image-selector flexed center" [ngClass]="{'hide': showPreview}">
+    <div class="image-selector flexed end" [ngClass]="{'hide': showPreview}">
       <input (change)="handleFileInput($event)" #imageInput type="file" accept="image/*" class="image-input"
         name="image-input" id="image-input">
       <button (click)="imageInput.click()" class="btn outline text">
@@ -26,76 +26,74 @@
     </div>
 
     <div class="controls">
-      <div class="size padded-y">
-        <h3 class="text-center ">size and repeat</h3>
-        <div class="flexed center padded">
+      <header class="flexed">
+        <h5 class="text-center active">
+          <a (click)="selectedControl='size'">size</a>
+        </h5>
+        <h5 class="padded-x">|</h5>
+        <h5 class="text-center ">
+          <a (click)="selectedControl='position'">Positoning</a>
+        </h5>
+      </header>
 
-          <input [(ngModel)]="size" type="number" min="50" max="1000" placeholder="width..." class="size-input">
+      <div *ngIf="selectedControl === 'size'" class="size flexed center padded-y">
+        <input [(ngModel)]="size" type="number" min="50" max="1000" placeholder="width..." class="size-input">
 
-          <div class="sized-box"></div>
+        <div class="sized-box"></div>
 
-          <button (click)="repeat='no-repeat'" class="btn circle text">
-            <i class="bi bi-square-fill"></i>
-          </button>
+        <button (click)="repeat='no-repeat'" class="btn circle text">
+          <i class="bi bi-square-fill"></i>
+        </button>
 
-          <div class="sized-box"></div>
+        <div class="sized-box"></div>
 
-          <button (click)="repeat='repeat-x'" class="btn circle text">
-            <i class="bi bi-distribute-horizontal"></i>
-          </button>
+        <button (click)="repeat='repeat-x'" class="btn circle text">
+          <i class="bi bi-distribute-horizontal"></i>
+        </button>
 
-          <div class="sized-box"></div>
+        <div class="sized-box"></div>
 
-          <button (click)="repeat='repeat-y'" class="btn circle text">
-            <i class="bi bi-distribute-vertical"></i>
-          </button>
+        <button (click)="repeat='repeat-y'" class="btn circle text">
+          <i class="bi bi-distribute-vertical"></i>
+        </button>
 
-          <div class="sized-box"></div>
-          <button (click)="repeat='repeat'" class="btn circle text">
-            <i class="bi bi-grid-3x3-gap-fill"></i>
-          </button>
-        </div>
+        <div class="sized-box"></div>
+        <button (click)="repeat='repeat'" class="btn circle text">
+          <i class="bi bi-grid-3x3-gap-fill"></i>
+        </button>
       </div>
 
-      <div class="position padded-y">
-        <h3 class="text-center ">Positoning</h3>
-        <div class="flexed center">
-          <div class="position-x padded flexed">
-            <button (click)="positionX='left'" class="btn circle">
-              <i class="bi bi-arrow-left"></i>
-            </button>
+      <div *ngIf="selectedControl === 'position'" class="position flexed center">
+        <div class="position-x padded flexed">
+          <button (click)="positionX='left'" class="btn circle">
+            <i class="bi bi-arrow-left"></i>
+          </button>
 
-            <button (click)="positionX='center'" class="btn circle">
-              <i class="bi bi-dot"></i>
-            </button>
+          <button (click)="positionX='center'" class="btn circle">
+            <i class="bi bi-dot"></i>
+          </button>
 
-            <button (click)="positionX='right'" class="btn circle">
-              <i class="bi bi-arrow-right"></i>
-            </button>
-          </div>
+          <button (click)="positionX='right'" class="btn circle">
+            <i class="bi bi-arrow-right"></i>
+          </button>
+        </div>
 
-          <div class="position-y  padded flexed">
-            <button (click)="positionY='top'" class="btn circle">
-              <i class="bi bi-arrow-up"></i>
-            </button>
+        <div class="position-y  padded flexed">
+          <button (click)="positionY='top'" class="btn circle">
+            <i class="bi bi-arrow-up"></i>
+          </button>
 
-            <button (click)="positionY='center'" class="btn circle">
-              <i class="bi bi-dot"></i>
-            </button>
+          <button (click)="positionY='center'" class="btn circle">
+            <i class="bi bi-dot"></i>
+          </button>
 
-            <button (click)="positionY='bottom'" class="btn circle">
-              <i class="bi bi-arrow-up"></i>
-            </button>
-          </div>
+          <button (click)="positionY='bottom'" class="btn circle">
+            <i class="bi bi-arrow-down"></i>
+          </button>
         </div>
       </div>
     </div>
 
-    <div class="flexed center padded">
-      <button (click)="submitBackground()" class="btn outline accent" [disabled]="isValidBackground">
-        <span>PUBLICAR</span>
-      </button>
-    </div>
     <span class="spacer"></span>
   </div>
 </div>

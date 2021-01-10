@@ -1,18 +1,23 @@
 .image-preview {
   position: relative;
-  height: calc(100vh - 400px);
+  height: calc(100vh - 250px);
 
   .image-selector.hide {
     display: none;
   }
 }
 
-
 .image-input {
   display: none;
 }
 
 .controls {
+
+  header {
+    .active {
+      color: var(--clr-accent);
+    }
+  }
 
   .size {
     .size-input {
