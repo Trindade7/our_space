@@ -3,6 +3,8 @@ import { AfterViewInit, Component, OnInit, QueryList, ViewChildren } from '@angu
 import { CardBackgroungModel, CardModel, mockBackground, mockCard } from 'src/app/core/models/card.model';
 import { CardComponent } from 'src/app/shared/card/card.component';
 
+import { NewBackgroundService } from './new-background.service';
+
 // TODO: COMPONENTALIZE
 
 type SelectedControl = 'size' | 'position';
@@ -23,7 +25,10 @@ export class NewBackgroundComponent implements OnInit, AfterViewInit {
 
   selectedControl: SelectedControl = 'size';
 
-  constructor (private _location: Location) { }
+  constructor (
+    private _location: Location,
+    private _newBackgroundSvc: NewBackgroundService
+  ) { }
 
   ngOnInit(): void { }
 
@@ -36,7 +41,13 @@ export class NewBackgroundComponent implements OnInit, AfterViewInit {
   }
 
   submitBackground(): void {
-    return;
+    if (this.imageFile) {
+      this._newBackgroundSvc.addBackground(this.background, this.imageFile)
+        .then(res => alert(res))
+        .catch(err => alert(err));
+    } else {
+      alert('No image');
+    }
   }
 
   handleFileInput(event: Event) {
@@ -63,6 +74,7 @@ export class NewBackgroundComponent implements OnInit, AfterViewInit {
     this._background.color = v;
   }
   set imageFileInput(file: File) {
+    this.isValidBackground = true;
     this.imageFile = file;
     const reader = new FileReader();
     reader.readAsDataURL(file);
@@ -72,7 +84,6 @@ export class NewBackgroundComponent implements OnInit, AfterViewInit {
       this._updatePreview();
       return '';
     };
-    this.isValidBackground = true;
   }
   set size(v: number) {
     console.log(v);

@@ -12,9 +12,11 @@
 }
 
 .controls {
+  .group-name {
+    transition: color 300ms;
+    cursor: pointer;
 
-  header {
-    .active {
+    &.active {
       color: var(--clr-accent);
     }
   }

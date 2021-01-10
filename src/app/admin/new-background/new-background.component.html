@@ -3,11 +3,11 @@
     <button (click)="goBack()" class="btn circle text">
       <i class="bi bi-x"></i>
     </button>
-    <h3>Add background</h3>
+    <h4>Add background</h4>
 
     <span class="spacer"></span>
 
-    <button (click)="submitBackground()" class="btn accent circle text" [disabled]="isValidBackground">
+    <button (click)="submitBackground()" class="btn accent circle text" [disabled]="!isValidBackground">
       <i class="bi bi-check-circle-fill"></i>
     </button>
   </nav>
@@ -24,15 +24,15 @@
         select image
       </button>
     </div>
-
+    <div class="sized-box"></div>
     <div class="controls">
       <header class="flexed">
-        <h5 class="text-center active">
-          <a (click)="selectedControl='size'">size</a>
+        <h5 (click)="selectedControl='size'" class="group-name text-center" [ngClass]="{'active': selectedControl}">
+          size
         </h5>
         <h5 class="padded-x">|</h5>
-        <h5 class="text-center ">
-          <a (click)="selectedControl='position'">Positoning</a>
+        <h5 (click)="selectedControl='position'" class="group-name text-center" [ngClass]="{'active': selectedControl}">
+          Positoning
         </h5>
       </header>
 
@@ -64,7 +64,7 @@
       </div>
 
       <div *ngIf="selectedControl === 'position'" class="position flexed center">
-        <div class="position-x padded flexed">
+        <div class="position-x padded-y flexed">
           <button (click)="positionX='left'" class="btn circle">
             <i class="bi bi-arrow-left"></i>
           </button>
