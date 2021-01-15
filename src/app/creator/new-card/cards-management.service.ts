@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
+import { AuthService } from '@app-core/auth.service';
+import { DatabaseService } from '@app-core/database.service';
+import { CardModel } from '@app-core/models/card.model';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { AuthService } from 'src/app/core/auth.service';
-import { DatabaseService } from 'src/app/core/database.service';
-import { CardModel } from 'src/app/core/models/card.model';
 
 @Injectable({
   providedIn: 'root'

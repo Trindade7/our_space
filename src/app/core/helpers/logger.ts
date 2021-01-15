@@ -1,4 +1,4 @@
-import { environment } from '../../environments/environment';
+import { environment } from '@app-envs/environment';
 
 interface LogType {
   type: 'log' | 'warn' | 'error';
@@ -18,7 +18,7 @@ export class Logger {
       for (const log of logs) {
         switch (log.type) {
           case 'log':
-            console.log(log);
+            console.log({ log });
             break;
 
           default:
@@ -66,13 +66,15 @@ export class Logger {
     for (const log of logObject) {
       switch (log.type) {
         case 'log':
-          console.log(...log.log);
+          log.log.map(item => console.log({ item }));
           break;
         case 'error':
           console.error(...log.log);
+          log.log.map(item => console.error({ item }));
           break;
         case 'warn':
           console.warn(...log.log);
+          log.log.map(item => console.warn({ item }));
           break;
 
         default:

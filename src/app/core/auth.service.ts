@@ -6,7 +6,7 @@ import { Observable, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 
 import { DatabaseService } from './database.service';
-import { Logger as logger } from './logger';
+import { Logger as logger } from './helpers/logger';
 import { UserModel } from './models/user.model';
 
 @Injectable({

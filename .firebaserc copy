@@ -2,13 +2,10 @@
   "targets": {
     "isourspace": {
       "hosting": {
-        "isourspace": [
+        "our-space": [
           "isourspace"
         ]
       }
     }
-  },
-  "projects": {
-    "default": "isourspace"
   }
 }

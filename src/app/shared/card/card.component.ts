@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
-import { CardModel, mockCard } from 'src/app/core/models/card.model';
+import { CardModel, mockCard } from '@app-core/models/card.model';
 
 @Component({
   selector: 'app-card',

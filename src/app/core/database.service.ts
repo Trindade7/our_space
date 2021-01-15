@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { watch } from 'rxjs-watcher';
 import { map, take, tap } from 'rxjs/operators';
 
-import { Logger as logger } from './logger';
+import { Logger as logger } from './helpers/logger';
 
 interface CollectionQueryModel {
   limit?: number;

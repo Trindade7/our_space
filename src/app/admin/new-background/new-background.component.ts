@@ -1,7 +1,7 @@
 import { Location } from '@angular/common';
 import { AfterViewInit, Component, OnInit, QueryList, ViewChildren } from '@angular/core';
-import { CardBackgroungModel, CardModel, mockBackground, mockCard } from 'src/app/core/models/card.model';
-import { CardComponent } from 'src/app/shared/card/card.component';
+import { CardBackgroungModel, CardModel, mockBackground, mockCard } from '@app-core/models/card.model';
+import { CardComponent } from '@app-shared/card/card.component';
 
 import { NewBackgroundService } from './new-background.service';
 
