@@ -9,7 +9,7 @@ import { StorageDbService } from '../storage-db.service';
   providedIn: 'root'
 })
 export class NewBackgroundService {
-  private _backgroundDbPath = 'assets/card-backgrounds';
+  private _backgroundDbPath = 'assets';
   private _backgroundStoragePath = 'cards/backgrounds';
   constructor (
     private _dbSvc: DatabaseService,
@@ -24,8 +24,13 @@ export class NewBackgroundService {
     return this._storageSvc.addBackground(backgroundFile, filePath).then(
       (res: string) => {
         background.imageUrl = res;
-        // this.
-        return this._dbSvc.create(background, this._backgroundDbPath);
+
+        return this._dbSvc.update<Partial<CardBackgroungModel>>(
+          {},
+          this._backgroundDbPath,
+          'cardBackgrounds',
+          { arrayKey: 'items', vals: [background] }
+        );
       },
       err => logger.startCollapsed('[new-background.service] ERROR: addBackground()', [err])
     );

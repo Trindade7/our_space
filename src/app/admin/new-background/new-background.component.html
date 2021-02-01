@@ -1,4 +1,8 @@
 <div class="admin-page  flexed col">
+  <div *ngIf="loading" class="loading-zone flexed center">
+    <app-loading-spinner></app-loading-spinner>
+  </div>
+
   <nav class="page-header flexed padded">
     <button (click)="goBack()" class="btn circle text">
       <i class="bi bi-x"></i>

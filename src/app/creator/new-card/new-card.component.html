@@ -92,6 +92,11 @@
       <b class="padded-05-y">Fundo</b>
 
       <div class="colors flexed">
+        <div *ngFor="let background of (backgroundImages() | async)" (click)="setBackground(background.color)"
+          [ngStyle]="{'background': 'url(' + background.imageUrl + ')'}" class="color image">
+          <span>{{background.color}}</span>
+        </div>
+
         <div *ngFor="let color of textColors" (click)="setBackground(color)" [ngStyle]="{'background': color}"
           class="color">
         </div>

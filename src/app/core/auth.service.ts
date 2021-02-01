@@ -60,32 +60,14 @@ export class AuthService {
   }
 
   async user(): Promise<UserModel> {
-    logger.collapsed('[auth.service] user()', ['getting user']);
-    const uid = await this.userOrNull$.pipe(
-      map(userOrNull => {
-
-        logger.collapsed('[auth.service] user() =>await uid', ['getting user', { userOrNull }]);
-        return userOrNull;
+    return this.userOrNull$.pipe(
+      map(userData => {
+        if (!userData) {
+          throw new Error('No user data. Something went horribly wrong');
+        }
+        return userData;
       })
     ).toPromise();
-
-    logger.collapsed('[auth.service] user()', ['got uid', { uid }]);
-
-    if (!uid) {
-      throw new Error('suth failure');
-    }
-
-    const user = await this._db.docOrNull$<UserModel>(uid.id, 'users').toPromise();
-
-    logger.collapsed('[auth.service] user()', ['got user', { user }]);
-
-    if (!user) {
-      throw new Error('No user data');
-    }
-
-    logger.collapsed('[auth.service] user()', ['got uid']);
-
-    return user;
   }
 
   async googleSignIn(): Promise<void> {

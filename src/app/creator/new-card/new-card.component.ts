@@ -2,7 +2,7 @@ import { Location } from '@angular/common';
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { CardModel, newCard } from '../../core/models/card.model';
+import { CardBackgroungModel, CardModel, newCard } from '../../core/models/card.model';
 import { CardsManagementService } from './cards-management.service';
 
 enum STATES {
@@ -65,6 +65,10 @@ export class NewCardComponent implements OnInit, AfterViewInit {
     } else {
       this.currentState--;
     }
+  }
+
+  backgroundImages(): Promise<CardBackgroungModel[]> {
+    return this._cardsSvc.backgrounds();
   }
 
   selectPicker(picker: 'color' | 'background' = 'color') {
