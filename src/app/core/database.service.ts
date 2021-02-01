@@ -205,13 +205,35 @@ export class DatabaseService {
     );
   }
 
-  update<T>(document: T, collectionPath: string, docId: string): Promise<void> {
+  updateArray(arrayKey: string, vals: any[], data: any): any {
+    data[arrayKey] = firebase.firestore.FieldValue.arrayUnion(...vals);
+  }
+
+  /**
+   *
+   * Obs: Array updates only one layer deep
+   */
+  update<T>(
+    document: T,
+    collectionPath: string,
+    docId: string,
+    addToArray?: { arrayKey: string, vals: any[]; },
+    removeFromArray?: { arrayKey: string, vals: any[]; }
+  ): Promise<void> {
     logger.startCollapsed('[database.service] [update()]', [
       `documentId: ${docId}`,
       'document',
       document,
+      addToArray,
       `path: ${collectionPath}`,
     ]);
+
+    if (addToArray) {
+      (document as any)[addToArray.arrayKey] = firebase.firestore.FieldValue.arrayUnion(...addToArray.vals);
+    }
+    if (removeFromArray) {
+      (document as any)[removeFromArray.arrayKey] = firebase.firestore.FieldValue.arrayRemove(...removeFromArray.vals);
+    }
 
     return this._firestore
       .collection(collectionPath)

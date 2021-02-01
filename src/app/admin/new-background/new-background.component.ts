@@ -22,6 +22,7 @@ export class NewBackgroundComponent implements OnInit, AfterViewInit {
   previewCard: CardModel = mockCard();
   showPreview!: any;
   isValidBackground = false;
+  loading = false;
 
   selectedControl: SelectedControl = 'size';
 
@@ -30,7 +31,9 @@ export class NewBackgroundComponent implements OnInit, AfterViewInit {
     private _newBackgroundSvc: NewBackgroundService
   ) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this._background.color = '#fff';
+  }
 
   ngAfterViewInit(): void {
     this.previewCardRef = this.cards.first;
@@ -42,15 +45,19 @@ export class NewBackgroundComponent implements OnInit, AfterViewInit {
 
   submitBackground(): void {
     if (this.imageFile) {
+      this.loading = true;
+      this.background.size = this.background.size ?? 400;
       this._newBackgroundSvc.addBackground(this.background, this.imageFile)
-        .then(res => alert(res))
-        .catch(err => alert(err));
+        .then(res => alert('Background added'))
+        .catch(err => alert(err))
+        .finally(() => this.loading = false);
     } else {
       alert('No image');
     }
   }
 
   handleFileInput(event: Event) {
+    this.isValidBackground = false; // In case user canscells input
     const file = (event.target as HTMLInputElement).files?.item(0);
     console.log({ file });
 
