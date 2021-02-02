@@ -1,0 +1,74 @@
+.customize-container {
+  height: calc(100vh - 80px);
+}
+
+.card-background {
+  .preview {
+    height: 400px;
+    max-height: 40vh;
+  }
+}
+
+.backgrounds-container {
+  border-radius: 70px;
+  width: 100%;
+  background: #efefef;
+}
+
+.color-picker {
+
+  .colors {
+
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .color {
+    width: 25px;
+    height: 25px;
+    border-radius: 5px;
+    margin: 8px;
+    flex: none;
+    border: 1px solid #ddd;
+  }
+}
+
+.background-picker {
+  .colors {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .color {
+    width: 45px;
+    height: 40px;
+    border-radius: 5px;
+    margin: 4px;
+    flex: none;
+    border: 1px solid #ddd;
+  }
+}
+
+
+.customize-options {
+  justify-content: center;
+  background: #efefef;
+  padding: .5rem;
+
+  .btn {
+    width: 80px;
+    margin: .5rem;
+
+    i {
+      font-size: 1.75rem;
+      width: 32px;
+      height: 32px;
+    }
+
+    span {
+      padding-left: 0;
+      padding-top: .5rem;
+      width: 100px;
+    }
+  }
+}

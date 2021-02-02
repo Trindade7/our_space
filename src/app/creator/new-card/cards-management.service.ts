@@ -45,8 +45,12 @@ export class CardsManagementService {
 
   async createCard(card: CardModel): Promise<void> {
     console.group('[cards.service] createCard() start');
-    // const user = await this._authSvc.user();
-    card.createdBy = 'José Trindade';
+    const user = await this._authSvc.user();
+    card.creator = {
+      name: user.name,
+      email: user.email
+    };
+
     return this._dbSvc.create<CardModel>(card, this._cardCollectionPath);
   }
 }

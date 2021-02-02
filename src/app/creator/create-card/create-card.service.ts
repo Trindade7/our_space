@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AuthService } from '@app-core/auth.service';
 import { DatabaseService } from '@app-core/database.service';
-import { CardBackgroungModel, CardModel } from '@app-core/models/card.model';
+import { Logger as logger } from '@app-core/helpers/logger';
+import { CardBackgroungModel, CardModel, newCard } from '@app-core/models/card.model';
 import { StoreGeneric, StoreModel } from '@app-core/store.generic';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -14,11 +15,16 @@ export class CreateCardService {
   private _cardsPath = 'cards';
   private _cardBackgroundsPath = 'assets';
 
+  _card: CardModel;
+
   constructor (
     private _dbSvc: DatabaseService,
     private _authSvc: AuthService,
     private _store: CreateCardStore
   ) {
+    this._card = newCard();
+
+    // TODO: move to selectBackground?
     this._dbSvc
       .docOrNull$<{ items: CardBackgroungModel[]; }>(
         'cardBackgrounds',
@@ -30,31 +36,74 @@ export class CreateCardService {
       );
   }
 
-  get backgrounds$(): Observable<CardBackgroungModel[]> {
-    return this._store.backgrounds$;
+  get card(): CardModel {
+    return this._card;
   }
 
-  // card$(id: string): Observable<CardModel | null> {
-  //   return this._dbSvc.docOrNull$<CardModel>(id, this._cardsPath).pipe(
-  //     tap(card => console.log({ card }))
-  //   );
-  // }
+  get backgrounds$(): Observable<CardBackgroungModel[]> {
+    return this._store.state$.pipe(
+      map(state => state.backgrounds ?? [])
+    );
+  }
+
+  set setCardBackground(background: CardBackgroungModel) {
+    this._card.background = background;
+  }
+
+  set setTextColor(color: string) {
+    this._card.textColor = color;
+  }
+
+  get currentPage$(): Observable<PAGES> {
+    return this._store.state$.pipe(
+      map(
+        state => state.currentPage
+      )
+    );
+  }
+
+  nextPage(): void {
+    if (this._store.state.currentPage === 2) {
+      logger.collapsed('[create-card.service] nextState()', ['already on last page']);
+      return;
+    }
+    // console.log(this._store.state.currentPage + 1);
+    this._store.patch({ currentPage: this._store.state.currentPage + 1 }, 'next page');
+  }
+
+  prevPage(): void {
+    if (this._store.state.currentPage === 0) {
+      logger.collapsed('[create-card.service] prevState()', ['already on first page']);
+      return;
+    }
+    this._store.patch({ currentPage: this._store.state.currentPage - 1 }, 'prev page');
+  }
 
   async saveCard(card: CardModel): Promise<void> {
-    console.group('[cards.service] createCard()');
-    console.log('\n\n', this._authSvc.user(), '\n\n');
+    logger.startCollapsed('[create-card.service] createCard()', []);
 
-    // const user = await this._authSvc.user();
-    // card.createdBy = 'José Trindade';
-    // return this._dbSvc.create<CardModel>(card, this._cardsPath);
+    const user = await this._authSvc.user();
+    card.creator = {
+      name: user.name,
+      email: user.email
+    };
+
+    return this._dbSvc.create<CardModel>(card, this._cardsPath)
+      .finally(() => logger.endCollapsed([]));
   }
 }
 
 
 
 // *################## CREATE STORE STATE ###################
+export enum PAGES {
+  TEXT,
+  CUSTOMIZE,
+  PREVIEW
+}
 interface CreateCardModel extends StoreModel {
   backgrounds: CardBackgroungModel[];
+  currentPage: PAGES;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -65,12 +114,7 @@ class CreateCardStore extends StoreGeneric<CreateCardModel>{
     super({
       loading: false,
       error: null,
+      currentPage: PAGES.TEXT
     });
-  }
-
-  get backgrounds$(): Observable<CardBackgroungModel[]> {
-    return this.state$.pipe(
-      map(state => state.backgrounds ?? [])
-    );
   }
 }

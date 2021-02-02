@@ -17,8 +17,7 @@ export interface CardModel {
         milliseconds: number;
         seconds: number;
     };
-    createdBy: string;
-    creator?: {
+    creator: {
         name: string,
         email: string;
     };
@@ -43,7 +42,10 @@ export function newCard(cardIn?: CardModel): CardModel {
         message: '',
         textColor: '#000',
         textStrokeColor: 'transparent',
-        createdBy: 'testing'
+        creator: {
+            name: 'testing',
+            email: 'trindade.jose77@gmail.com'
+        },
     }, cardIn);
 
     return card;
@@ -61,7 +63,10 @@ export function mockCard(): CardModel {
             milliseconds: newDate.getMilliseconds(),
             seconds: newDate.getSeconds()
         },
-        createdBy: 'testing'
+        creator: {
+            name: 'testing',
+            email: 'trindade.jose77@gmail.com'
+        },
     };
 }
 

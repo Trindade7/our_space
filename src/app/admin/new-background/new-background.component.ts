@@ -92,11 +92,11 @@ export class NewBackgroundComponent implements OnInit, AfterViewInit {
       return '';
     };
   }
-  set size(v: number) {
-    console.log(v);
+  set backgroundSize(size: number) {
+    console.log(size);
     this._updatePreview();
 
-    this._background.size = v;
+    this._background.size = size;
   }
   set repeat(v: 'no-repeat' | 'repeat' | 'repeat-x' | 'repeat-y') {
     console.log(v);

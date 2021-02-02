@@ -1,4 +1,81 @@
-<p>create-card works!</p>
-<button class="btn primary" (click)="saveCard()">
-  <i class="bi bi-book"></i>
-</button>
+<div class="view-card-page flexed col">
+  <!-- <div *ngIf="pageIsloading" class="loading-zone flexed center">
+    <app-loading-spinner></app-loading-spinner>
+  </div> -->
+
+  <nav class="page-header flexed padded">
+    <button (click)="appSvc.goBack()" class="btn circle text">
+      <i class="bi bi-x"></i>
+    </button>
+    <div class="sized-box"></div>
+    <div>
+      <h3>{{currentPage | titlecase}}</h3>
+    </div>
+
+    <span class="spacer"></span>
+
+    <div class="flexed">
+      <button *ngIf="showPrevPageButton" (click)="createSvc.prevPage()" class="prev btn circle text">
+        <i class="bi bi-arrow-left"></i>
+      </button>
+
+      <div class="sized-box-05"></div>
+
+      <button *ngIf="showNextPageButton" (click)="createSvc.nextPage()" class="btn circle text">
+        <i class="bi bi-arrow-right"></i>
+      </button>
+
+      <button *ngIf="showSubmitButton" (click)="saveCard()" class="btn accent circle text" [disabled]="!canSubmit">
+        <i class="bi bi-check-circle-fill"></i>
+      </button>
+    </div>
+  </nav>
+
+  <div *ngIf="currentPage === 'TEXT'" class="states flexed col padded">
+    <span class="spacer"></span>
+
+    <div class="card-text">
+      <p class="text-center">
+        Digite a mensagem para o cartão na caixa abaixo...
+      </p>
+
+      <div class="message padded">
+        <textarea #messageInput class="message-input" name="message" id="message-input" rows="10"
+          [(ngModel)]="createSvc.card.message">
+                </textarea>
+      </div>
+
+      <div class="flexed center padded">
+        <button (click)="createSvc.nextPage()" class="btn icon outline" [disabled]="!canSubmit">
+          <span>Escolher fundo</span>
+        </button>
+      </div>
+    </div>
+
+    <span class="spacer"></span>
+
+  </div>
+
+  <div *ngIf="currentPage === 'CUSTOMIZE'" class="states flexed col">
+    <app-customize-card></app-customize-card>
+  </div>
+
+  <div *ngIf="currentPage === 'PREVIEW'" class="states flexed col padded">
+    <span class="spacer"></span>
+
+    <div class="final-card">
+      <app-card [card]="createSvc.card"></app-card>
+    </div>
+
+    <div class="sized-box"></div>
+
+    <div class="flexed center padded">
+      <button (click)="saveCard()" class="btn outline accent" [disabled]="canSubmit">
+        <span>PUBLICAR</span>
+      </button>
+    </div>
+    <span class="spacer"></span>
+  </div>
+
+  <span class="spacer"></span>
+</div>

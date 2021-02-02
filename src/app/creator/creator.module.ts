@@ -8,6 +8,7 @@ import { CreatorComponent } from './creator.component';
 import { ColorPickerComponent } from './new-card/color-picker/color-picker.component';
 import { NewCardComponent } from './new-card/new-card.component';
 import { CreateCardComponent } from './create-card/create-card.component';
+import { CustomizeCardComponent } from './create-card/customize-card/customize-card.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { CreateCardComponent } from './create-card/create-card.component';
     NewCardComponent,
     ColorPickerComponent,
     CreateCardComponent,
+    CustomizeCardComponent,
   ],
   imports: [
     CommonModule,
