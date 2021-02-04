@@ -48,10 +48,16 @@ export class CreateCardService {
 
   set setCardBackground(background: CardBackgroungModel) {
     this._card.background = background;
+    this._updateCard();
+  }
+  set setCardBackgroundSize(size: number) {
+    this._card.background.size = size;
+    this._updateCard();
   }
 
   set setTextColor(color: string) {
     this._card.textColor = color;
+    this._updateCard();
   }
 
   get currentPage$(): Observable<PAGES> {
@@ -77,6 +83,11 @@ export class CreateCardService {
       return;
     }
     this._store.patch({ currentPage: this._store.state.currentPage - 1 }, 'prev page');
+  }
+
+  private _updateCard() {
+    // re-renders card component
+    this._card = { ...this._card };
   }
 
   async saveCard(card: CardModel): Promise<void> {
@@ -114,7 +125,7 @@ class CreateCardStore extends StoreGeneric<CreateCardModel>{
     super({
       loading: false,
       error: null,
-      currentPage: PAGES.TEXT
+      currentPage: PAGES.CUSTOMIZE
     });
   }
 }

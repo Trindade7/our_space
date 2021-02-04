@@ -2,23 +2,28 @@
   height: calc(100vh - 80px);
 }
 
-.card-background {
-  .preview {
-    height: 400px;
-    max-height: 40vh;
-  }
+.card-preview {
+  height: 400px;
+  max-height: 40vh;
 }
 
-.backgrounds-container {
-  border-radius: 70px;
-  width: 100%;
-  background: #efefef;
+.background-picker {
+  .colors {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .backgrounds {
+    gap: .5rem;
+    padding: .5rem;
+    overflow-x: auto;
+    scroll-snap-align: start;
+  }
+
 }
 
 .color-picker {
-
   .colors {
-
     flex-wrap: wrap;
     justify-content: center;
   }
@@ -33,24 +38,7 @@
   }
 }
 
-.background-picker {
-  .colors {
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-
-  .color {
-    width: 45px;
-    height: 40px;
-    border-radius: 5px;
-    margin: 4px;
-    flex: none;
-    border: 1px solid #ddd;
-  }
-}
-
-
-.customize-options {
+.nav-bar {
   justify-content: center;
   background: #efefef;
   padding: .5rem;

@@ -1,21 +1,26 @@
 <div class="customize-container flexed col">
-  <div class="card-background padded">
-    <div class="preview">
-      <app-card [card]="crateCardSvc.card"></app-card>
-    </div>
+  <div class="card-preview padded">
+    <app-card [card]="crateCardSvc.card"></app-card>
   </div>
 
   <span class="spacer"></span>
 
   <div *ngIf="customizingZone === 'background'" class="background-picker padded">
-    <b class="padded-05-y">Fundo</b>
+    <header class="flexed">
+      <b class="padded-05-y">Fundo</b>
 
-    <div class="colors flexed">
-      <div *ngFor="let background of (crateCardSvc.backgrounds$ | async)"
-        (click)="crateCardSvc.setCardBackground = background"
-        [ngStyle]="{'background': 'url(' + background.imageUrl + ')'}" class="color image">
-        <span>{{background.color}}</span>
+      <span class="spacer"></span>
+
+      <div class="contolls">
+        <input type="range" min="100" max="1080" value="250" class="slider" id="background-range"
+          [(ngModel)]="crateCardSvc.setCardBackgroundSize">
       </div>
+    </header>
+
+    <div class="backgrounds row-sm flexed">
+      <app-background-preview *ngFor="let background of crateCardSvc.backgrounds$ | async" [background]="background"
+        (setBackgroundEmitter)="setBackground($event)">
+      </app-background-preview>
     </div>
   </div>
 
@@ -42,13 +47,7 @@
 
   <span class="spacer"></span>
 
-  <nav class="customize-options flexed">
-    <button (click)="customizingZone= 'font'" class="btn flexed col center"
-      [ngClass]="{'text-primary': customizingZone === 'font'}">
-      <i class="bi bi-file-font-fill"></i>
-      <span>Fonte</span>
-    </button>
-
+  <nav class="nav-bar flexed">
     <button (click)="customizingZone = 'background'" class="btn flexed col center"
       [ngClass]="{'text-primary': customizingZone === 'background'}">
       <i class="bi bi-image"></i>
@@ -59,6 +58,12 @@
       [ngClass]="{'text-primary': customizingZone === 'color'}">
       <i class="bi bi-circle-half"></i>
       <span>Cor do texto</span>
+    </button>
+
+    <button (click)="customizingZone= 'font'" class="btn flexed col center"
+      [ngClass]="{'text-primary': customizingZone === 'font'}">
+      <i class="bi bi-file-font-fill"></i>
+      <span>Fonte</span>
     </button>
   </nav>
 

@@ -9,7 +9,7 @@ import { CreateCardService } from './create-card.service';
   styleUrls: ['./create-card.component.scss']
 })
 export class CreateCardComponent implements OnInit {
-  currentPage = 'TEXT';
+  currentPage!: string;
 
   showNextPageButton = true;
   showPrevPageButton = false;
