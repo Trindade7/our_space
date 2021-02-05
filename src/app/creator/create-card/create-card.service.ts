@@ -28,7 +28,7 @@ export class CreateCardService {
       email: user.email
     });
 
-    // TODO: #3 #2 move to selectBackground?
+    // TODO: #2 move to selectBackground?
     this._dbSvc
       .docOrNull$<{ items: CardBackgroungModel[]; }>(
         'cardBackgrounds',
