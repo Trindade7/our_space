@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { CardBackgroungModel, createColorBackground } from '@app-core/models/card.model';
 
 import { CreateCardService } from '../create-card.service';
+import { CustomizeCardService } from './customize-card.service';
 
 const TEXT_COLORS = [
   'purple',
@@ -27,7 +28,10 @@ export class CustomizeCardComponent implements OnInit {
   textColors: string[] = TEXT_COLORS;
   backgroundColors: CardBackgroungModel[];
 
-  constructor (public crateCardSvc: CreateCardService) {
+  constructor (
+    public crateCardSvc: CreateCardService,
+    public customizeSvc: CustomizeCardService
+  ) {
     this.backgroundColors = this.textColors.map(
       color => createColorBackground(color)
     );

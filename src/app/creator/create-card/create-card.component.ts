@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { mockCard } from '@app-core/models/card.model';
 import { AppService } from 'src/app/app.service';
 
 import { CreateCardService } from './create-card.service';
@@ -50,6 +49,6 @@ export class CreateCardComponent implements OnInit {
   }
 
   saveCard() {
-    this.createSvc.saveCard(mockCard());
+    this.createSvc.saveCard();
   }
 }

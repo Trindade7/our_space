@@ -28,26 +28,20 @@ export class CreateCardService {
       email: user.email
     });
 
-    // TODO: #2 move to selectBackground?
-    this._dbSvc
-      .docOrNull$<{ items: CardBackgroungModel[]; }>(
-        'cardBackgrounds',
-        this._cardBackgroundsPath
-      ).pipe(
-        map(backgroundList => backgroundList ? backgroundList.items : [])
-      ).subscribe(
-        backgrounds => _store.patch({ backgrounds }, 'get backgrounds')
-      );
+    // // TODO: #2 move to selectBackground?
+    // this._dbSvc
+    //   .docOrNull$<{ items: CardBackgroungModel[]; }>(
+    //     'cardBackgrounds',
+    //     this._cardBackgroundsPath
+    //   ).pipe(
+    //     map(backgroundList => backgroundList ? backgroundList.items : [])
+    //   ).subscribe(
+    //     backgrounds => _store.patch({ backgrounds }, 'get backgrounds')
+    //   );
   }
 
   get card(): CardModel {
     return this._card;
-  }
-
-  get backgrounds$(): Observable<CardBackgroungModel[]> {
-    return this._store.state$.pipe(
-      map(state => state.backgrounds ?? [])
-    );
   }
 
   set setCardBackground(background: CardBackgroungModel) {
@@ -77,7 +71,7 @@ export class CreateCardService {
       logger.collapsed('[create-card.service] nextState()', ['already on last page']);
       return;
     }
-    // console.log(this._store.state.currentPage + 1);
+
     this._store.patch({ currentPage: this._store.state.currentPage + 1 }, 'next page');
   }
 
@@ -90,7 +84,7 @@ export class CreateCardService {
   }
 
   private _updateCard() {
-    // re-renders card preview component
+    // !re-renders card preview component
     this._card = { ...this._card };
   }
 
@@ -112,7 +106,6 @@ export enum PAGES {
   PREVIEW
 }
 interface CreateCardModel extends StoreModel {
-  backgrounds: CardBackgroungModel[];
   currentPage: PAGES;
 }
 
