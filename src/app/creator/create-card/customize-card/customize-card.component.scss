@@ -3,8 +3,16 @@
 }
 
 .card-preview {
-  height: 400px;
-  max-height: 40vh;
+  // TODO: change flex to adapt to parent container size
+  max-height: 500px;
+  flex: auto;
+}
+
+.row {
+  gap: .5rem;
+  padding: .5rem;
+  overflow-x: auto;
+  scroll-snap-align: start;
 }
 
 .background-picker {
@@ -12,14 +20,6 @@
     flex-wrap: wrap;
     justify-content: center;
   }
-
-  .backgrounds {
-    gap: .5rem;
-    padding: .5rem;
-    overflow-x: auto;
-    scroll-snap-align: start;
-  }
-
 }
 
 .color-picker {

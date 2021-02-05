@@ -70,6 +70,17 @@ export function mockCard(): CardModel {
     };
 }
 
+export function createColorBackground(color: string): CardBackgroungModel {
+    return {
+        color: color,
+        imageUrl: '',
+        size: 0,
+        repeat: 'no-repeat',
+        positionX: 'left',
+        positionY: 'bottom',
+    };
+}
+
 export function mockBackground(): CardBackgroungModel {
     return {
         color: randomColor(),

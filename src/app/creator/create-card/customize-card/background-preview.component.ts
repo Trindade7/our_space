@@ -23,13 +23,23 @@ import { CardBackgroungModel } from '@app-core/models/card.model';
       }
   </style>
 
-<div class="background"
+<div *ngIf="background.imageUrl.length; else colorTemplate" class="background"
      (click)="setBackground()"
      [ngStyle]="{
        'background-color': background.color,
        'background-image': 'url(' + background.imageUrl + ')'
       }">
 </div>
+<ng-template  #colorTemplate>
+  <div class="background"
+      (click)="setBackground()"
+      [ngStyle]="{
+        'background-color': background.color,
+        'background-image': 'url(' + background.imageUrl + ')'
+        }">
+  </div>
+</ng-template>
+
 `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })

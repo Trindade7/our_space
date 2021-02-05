@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { CardBackgroungModel } from '@app-core/models/card.model';
+import { CardBackgroungModel, createColorBackground } from '@app-core/models/card.model';
 
 import { CreateCardService } from '../create-card.service';
 
@@ -25,8 +25,13 @@ export class CustomizeCardComponent implements OnInit {
   customizingZone: 'background' | 'color' | 'font' = 'background';
 
   textColors: string[] = TEXT_COLORS;
+  backgroundColors: CardBackgroungModel[];
 
-  constructor (public crateCardSvc: CreateCardService) { }
+  constructor (public crateCardSvc: CreateCardService) {
+    this.backgroundColors = this.textColors.map(
+      color => createColorBackground(color)
+    );
+  }
 
   ngOnInit(): void {
   }
@@ -37,10 +42,6 @@ export class CustomizeCardComponent implements OnInit {
   }
 
   set setBackgroundSize(size: number) {
-    console.log({ size }, '\n bck size=>', this.crateCardSvc._card.background.size);
-
     this.crateCardSvc._card.background.size = size;
-    console.log('\n new bck size =>', this.crateCardSvc._card.background.size);
-
   }
 }

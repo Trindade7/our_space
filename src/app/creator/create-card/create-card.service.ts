@@ -23,8 +23,12 @@ export class CreateCardService {
     private _store: CreateCardStore
   ) {
     this._card = newCard();
+    this._authSvc.user().then(user => this._card.creator = {
+      name: user.name,
+      email: user.email
+    });
 
-    // TODO: move to selectBackground?
+    // TODO: #3 #2 move to selectBackground?
     this._dbSvc
       .docOrNull$<{ items: CardBackgroungModel[]; }>(
         'cardBackgrounds',
@@ -86,21 +90,16 @@ export class CreateCardService {
   }
 
   private _updateCard() {
-    // re-renders card component
+    // re-renders card preview component
     this._card = { ...this._card };
   }
 
-  async saveCard(card: CardModel): Promise<void> {
-    logger.startCollapsed('[create-card.service] createCard()', []);
+  // saveCard(): Promise<void> {
+  saveCard(): any {
+    logger.startCollapsed('[create-card.service] createCard()', [this._card]);
 
-    const user = await this._authSvc.user();
-    card.creator = {
-      name: user.name,
-      email: user.email
-    };
-
-    return this._dbSvc.create<CardModel>(card, this._cardsPath)
-      .finally(() => logger.endCollapsed([]));
+    // return this._dbSvc.create<CardModel>(card, this._cardsPath)
+    //   .finally(() => logger.endCollapsed([]));
   }
 }
 

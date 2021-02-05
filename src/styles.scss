@@ -360,6 +360,16 @@ input {
 }
 
 // *################### THUMBS
+.display-md-only {
+  display: none;
+}
+
+@media screen and (min-device-width: 720px) {
+  .display-md-only {
+    display: inherit;
+  }
+}
+
 @media screen and (min-device-width: 1200px) and (max-device-width: 1600px) and (-webkit-min-device-pixel-ratio: 1) {
   .desktop-only {
     display: inherit !important;
