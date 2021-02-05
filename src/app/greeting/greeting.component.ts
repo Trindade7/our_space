@@ -7,13 +7,17 @@ import { Component, OnInit } from '@angular/core';
 export class GreetingComponent implements OnInit {
   started = false;
   messageArray: string[] = [
-    'I really wanted to gift you something but, unfortunately I can’t do that right now  :(',
-    'So I decided to gift “Us” something for the time being.',
-    'Every week, I’ll write you a special message here untill we meet.',
-    'You are welcome to do the same :)',
-    'And remember...',
-    "EU TE AMO | I love you | Je t'aime | あなたを愛しています",
+    'WELCOME BACK :)',
+    'EU TE AMO | I love you | Je t\'aime | あなたを愛しています',
   ];
+  // messageArray: string[] = [
+  //   'I really wanted to gift you something but, unfortunately I can’t do that right now  :(',
+  //   'So I decided to gift “Us” something for the time being.',
+  //   'Every week, I’ll write you a special message here untill we meet.',
+  //   'You are welcome to do the same :)',
+  //   'And remember...',
+  //   "EU TE AMO | I love you | Je t'aime | あなたを愛しています",
+  // ];
   activeMessage!: string;
   showMessage = false;
   showControls = false;
@@ -21,6 +25,15 @@ export class GreetingComponent implements OnInit {
   constructor () { }
 
   ngOnInit(): void {
+    this.greet();
+  }
+
+  greet(): void {
+    this.started = true;
+    this.showControls = false;
+    this.messageArray.forEach((message, index) => {
+      this.createAnimationInterval(message, index);
+    });
   }
 
   startGreeting() {
@@ -51,14 +64,6 @@ export class GreetingComponent implements OnInit {
     //     }, 3000);
     //   });
     // }
-  }
-
-  greet(): void {
-    this.started = true;
-    this.showControls = false;
-    this.messageArray.forEach((message, index) => {
-      this.createAnimationInterval(message, index);
-    });
   }
 
   createAnimationInterval(message: string, index: number): void {

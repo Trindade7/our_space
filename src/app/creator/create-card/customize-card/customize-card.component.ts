@@ -46,6 +46,6 @@ export class CustomizeCardComponent implements OnInit {
   }
 
   set setBackgroundSize(size: number) {
-    this.crateCardSvc._card.background.size = size;
+    this.crateCardSvc.setCardBackgroundSize = size;
   }
 }

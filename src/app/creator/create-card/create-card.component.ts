@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Logger as logger } from '@app-core/helpers/logger';
 import { AppService } from 'src/app/app.service';
 
 import { CreateCardService } from './create-card.service';
@@ -9,6 +10,7 @@ import { CreateCardService } from './create-card.service';
 })
 export class CreateCardComponent implements OnInit {
   currentPage!: string;
+  pageIsloading = false;
 
   showNextPageButton = true;
   showPrevPageButton = false;
@@ -42,13 +44,23 @@ export class CreateCardComponent implements OnInit {
             break;
         }
       });
-
   }
 
   ngOnInit(): void {
   }
 
-  saveCard() {
-    this.createSvc.saveCard();
+  saveCard(): void {
+    const confirmSave = confirm('Deseja salvar?');
+    if (!confirmSave) {
+      return;
+    }
+    this.pageIsloading = true;
+    this.createSvc.saveCard()
+      .then(() => alert('Salvo com sucesso :)'))
+      .catch(err => {
+        logger.collapsed('[create-card.component] saveCard()', [{ err }]);
+        alert('ERRO AO SALVAR :(');
+      })
+      .finally(() => this.pageIsloading = false);
   }
 }

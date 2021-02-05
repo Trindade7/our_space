@@ -1,10 +1,10 @@
 <div class="view-card-page flexed col">
-  <!-- <div *ngIf="pageIsloading" class="loading-zone flexed center">
+  <div *ngIf="pageIsloading" class="loading-zone flexed center">
     <app-loading-spinner></app-loading-spinner>
-  </div> -->
+  </div>
 
   <nav class="page-header flexed padded">
-    <button (click)="appSvc.goBack()" class="btn circle text">
+    <button (click)="appSvc.goHome()" class="btn circle text">
       <i class="bi bi-x"></i>
     </button>
     <div class="sized-box"></div>
@@ -25,7 +25,8 @@
         <i class="bi bi-arrow-right"></i>
       </button>
 
-      <button *ngIf="showSubmitButton" (click)="saveCard()" class="btn accent circle text" [disabled]="!canSubmit">
+      <button *ngIf="showSubmitButton" (click)="saveCard()" class="btn accent circle text"
+        [disabled]="createSvc.card.message.length < 5">
         <i class="bi bi-check-circle-fill"></i>
       </button>
     </div>
@@ -36,7 +37,8 @@
 
     <div class="card-text">
       <p class="text-center">
-        Digite a mensagem para o cartão na caixa abaixo...
+        Digite a mensagem para o cartão na caixa abaixo,
+        <strong>min 5 carácteres</strong>...
       </p>
 
       <div class="message padded">
@@ -46,7 +48,7 @@
       </div>
 
       <div class="flexed center padded">
-        <button (click)="createSvc.nextPage()" class="btn icon outline" [disabled]="!canSubmit">
+        <button (click)="createSvc.nextPage()" class="btn icon outline" [disabled]="createSvc.card.message.length < 5">
           <span>Escolher fundo</span>
         </button>
       </div>

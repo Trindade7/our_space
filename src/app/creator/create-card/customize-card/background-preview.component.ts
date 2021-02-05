@@ -13,14 +13,14 @@ import { CardBackgroungModel } from '@app-core/models/card.model';
       min-width: 75px;
       min-height: 75px;
       border: 1px solid lightgrey;
-      border-radius: 8px;
       background-size: cover;
       cursor:pointer;
       transition: box-shadow 200ms ease-in;
     }
-    .background:hover{
-        box-shadow: 0 0 8px lightgrey
-      }
+    .background:hover,
+    .background:focus{
+      box-shadow: 4px 4px;
+    }
   </style>
 
 <div *ngIf="background.imageUrl.length; else colorTemplate" class="background"

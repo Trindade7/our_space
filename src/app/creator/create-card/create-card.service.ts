@@ -15,7 +15,7 @@ export class CreateCardService {
   private _cardsPath = 'cards';
   private _cardBackgroundsPath = 'assets';
 
-  _card: CardModel;
+  private _card: CardModel;
 
   constructor (
     private _dbSvc: DatabaseService,
@@ -27,17 +27,6 @@ export class CreateCardService {
       name: user.name,
       email: user.email
     });
-
-    // // TODO: #2 move to selectBackground?
-    // this._dbSvc
-    //   .docOrNull$<{ items: CardBackgroungModel[]; }>(
-    //     'cardBackgrounds',
-    //     this._cardBackgroundsPath
-    //   ).pipe(
-    //     map(backgroundList => backgroundList ? backgroundList.items : [])
-    //   ).subscribe(
-    //     backgrounds => _store.patch({ backgrounds }, 'get backgrounds')
-    //   );
   }
 
   get card(): CardModel {
@@ -52,7 +41,6 @@ export class CreateCardService {
     this._card.background.size = size;
     this._updateCard();
   }
-
   set setTextColor(color: string) {
     this._card.textColor = color;
     this._updateCard();
@@ -88,12 +76,15 @@ export class CreateCardService {
     this._card = { ...this._card };
   }
 
-  // saveCard(): Promise<void> {
-  saveCard(): any {
+  saveCard(): Promise<void> {
     logger.startCollapsed('[create-card.service] createCard()', [this._card]);
 
-    // return this._dbSvc.create<CardModel>(card, this._cardsPath)
-    //   .finally(() => logger.endCollapsed([]));
+    return this._dbSvc.create<CardModel>(this.card, this._cardsPath)
+      .then(() => {
+        this._card = newCard();
+        this._store.patch({ currentPage: PAGES.TEXT }, 'Reset card');
+      })
+      .finally(() => logger.endCollapsed([]));
   }
 }
 
@@ -117,7 +108,7 @@ class CreateCardStore extends StoreGeneric<CreateCardModel>{
     super({
       loading: false,
       error: null,
-      currentPage: PAGES.CUSTOMIZE
+      currentPage: PAGES.TEXT
     });
   }
 }

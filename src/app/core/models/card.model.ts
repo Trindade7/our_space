@@ -6,6 +6,15 @@ export interface CardBackgroungModel {
     positionX: 'left' | 'center' | 'right';
     positionY: 'top' | 'center' | 'bottom';
 }
+export interface CardFontModel {
+    color: string;
+    fontFamily: string;
+    size: number | 'inherit';
+    fontWeight: 200 | 300 | 500 | 900 | 'inherit';
+    italic: boolean;
+    strokeSize: number | 'inherit';
+    strokeColor: string;
+}
 
 export interface CardModel {
     id: string;
@@ -21,6 +30,7 @@ export interface CardModel {
         name: string,
         email: string;
     };
+    font?: CardFontModel;
 }
 
 
@@ -42,6 +52,7 @@ export function newCard(cardIn?: CardModel): CardModel {
         message: '',
         textColor: '#000',
         textStrokeColor: 'transparent',
+        font: newCardFont(),
         creator: {
             name: 'testing',
             email: 'trindade.jose77@gmail.com'
@@ -67,6 +78,7 @@ export function mockCard(): CardModel {
             name: 'testing',
             email: 'trindade.jose77@gmail.com'
         },
+        font: newCardFont()
     };
 }
 
@@ -89,6 +101,18 @@ export function mockBackground(): CardBackgroungModel {
         repeat: 'no-repeat',
         positionX: 'left',
         positionY: 'bottom',
+    };
+}
+
+export function newCardFont(font?: Partial<CardFontModel>): CardFontModel {
+    return {
+        color: font?.color ?? 'inherit',
+        fontFamily: font?.fontFamily ?? 'inherit',
+        size: font?.size ?? 'inherit',
+        fontWeight: font?.fontWeight ?? 'inherit',
+        italic: font?.italic ?? false,
+        strokeSize: font?.strokeSize ?? 'inherit',
+        strokeColor: font?.strokeColor ?? 'inherit',
     };
 }
 
