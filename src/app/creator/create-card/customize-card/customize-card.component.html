@@ -18,7 +18,7 @@
     </header>
 
     <div class="backgrounds row flexed">
-      <app-background-preview *ngFor="let background of crateCardSvc.backgrounds$ | async" [background]="background"
+      <app-background-preview *ngFor="let background of customizeSvc.backgrounds$ | async" [background]="background"
         (setBackgroundEmitter)="setBackground($event)">
       </app-background-preview>
       <app-background-preview *ngFor="let background of backgroundColors" [background]="background"
