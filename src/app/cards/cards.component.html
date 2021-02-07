@@ -7,8 +7,12 @@
     <!-- <button class="btn circle text">
       <i class="bi bi-grid-fill"></i>
     </button> -->
-    <i class="bi bi-grid-fill"></i>
+    <i class="bi bi-grid-fill menu-control" (click)="showMenu = !showMenu"></i>
   </nav>
+
+  <div class="app-menu" [ngClass]="{'active': showMenu}">
+    <app-menu></app-menu>
+  </div>
 
   <span class="spacer"></span>
 

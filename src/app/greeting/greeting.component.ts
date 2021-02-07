@@ -8,7 +8,6 @@ export class GreetingComponent implements OnInit {
   started = false;
   messageArray: string[] = [
     'WELCOME BACK :)',
-    'EU TE AMO | I love you | Je t\'aime | あなたを愛しています',
   ];
   // messageArray: string[] = [
   //   'I really wanted to gift you something but, unfortunately I can’t do that right now  :(',

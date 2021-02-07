@@ -2,6 +2,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400&family=Rokkitt:wght@400;600&display=swap');
 @import "~bootstrap-icons/font/bootstrap-icons.css";
 
+// TODO: REMOVE ON PROD
+.firebase-emulator-warning {
+  display: none;
+}
+
 :root {
   --clr-text: rgba(0, 0, 0, 0.87);
   --clr-text-disabled: rgba(0, 0, 0, 0.67);

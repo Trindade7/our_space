@@ -6,6 +6,7 @@ import 'zone.js/dist/zone-error';
 
 export const environment = {
   production: false,
+  useEmulators: true,
 
   firebaseConfig: {
     apiKey: 'AIzaSyCqlpaErRqQa-MrF7ZFSKNlkDAW-_TNTUw',
