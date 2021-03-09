@@ -10,7 +10,7 @@ import { CardsService } from './cards.service';
 })
 export class CardsComponent implements OnInit {
   // cards: CardModel[] = [mockCard()];
-  showMenu = true;
+  showMenu = false;
   cards$: Observable<CardModel[]>;
 
   constructor (private _cardsSvc: CardsService) {
