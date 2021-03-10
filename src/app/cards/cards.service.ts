@@ -34,6 +34,7 @@ export class CardsService {
     console.group('[cards.service] createCard() start');
     const user = await this._authSvc.user();
     card.creator = {
+      id: user.id,
       name: user.name,
       email: user.email
     };

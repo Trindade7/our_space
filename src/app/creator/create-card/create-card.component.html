@@ -1,5 +1,5 @@
 <div class="view-card-page flexed col">
-  <div *ngIf="pageIsloading" class="loading-zone flexed center">
+  <div *ngIf="(store.loading$|async)" class="loading-zone flexed center">
     <app-loading-spinner></app-loading-spinner>
   </div>
 
@@ -9,31 +9,30 @@
     </button>
     <div class="sized-box"></div>
     <div>
-      <!-- <h3>{{currentPage | titlecase }}</h3> -->
-      <h3>{{currentPage }}</h3>
+      <h3>{{pageName|async}}</h3>
     </div>
 
     <span class="spacer"></span>
 
     <div class="flexed">
-      <button *ngIf="showPrevPageButton" (click)="createSvc.prevPage()" class="prev btn circle text">
+      <button *ngIf="(store.currentPage$|async)!==pages.TEXT" (click)="store.prevPage()" class="prev btn circle text">
         <i class="bi bi-arrow-left"></i>
       </button>
 
       <div class="sized-box-05"></div>
 
-      <button *ngIf="showNextPageButton" (click)="createSvc.nextPage()" class="btn circle text">
+      <button *ngIf="(store.currentPage$|async)!==pages.PREVIEW" (click)="store.nextPage()" class="btn circle text">
         <i class="bi bi-arrow-right"></i>
       </button>
 
-      <button *ngIf="showSubmitButton" (click)="saveCard()" class="btn accent circle text"
-        [disabled]="createSvc.card.message.length < 5">
+      <button *ngIf="(store.currentPage$|async)===pages.PREVIEW" (click)="saveCard()" class="btn accent circle text"
+        [disabled]="(store.isValid$ | async)">
         <i class="bi bi-check-circle-fill"></i>
       </button>
     </div>
   </nav>
 
-  <div *ngIf="currentPage === 'TEXT'" class="states flexed col padded">
+  <div *ngIf="(store.currentPage$|async) === pages.TEXT" class="states flexed col padded">
     <span class="spacer"></span>
 
     <div class="card-text">
@@ -44,12 +43,12 @@
 
       <div class="message padded">
         <textarea #messageInput class="message-input" name="message" id="message-input" rows="10"
-          [(ngModel)]="createSvc.card.message">
+          [(ngModel)]="store.message">
                 </textarea>
       </div>
 
       <div class="flexed center padded">
-        <button (click)="createSvc.nextPage()" class="btn icon outline" [disabled]="createSvc.card.message.length < 5">
+        <button (click)="store.nextPage()" class="btn icon outline" [disabled]="(store.isValid$|async)">
           <span>Escolher fundo</span>
         </button>
       </div>
@@ -59,21 +58,21 @@
 
   </div>
 
-  <div *ngIf="currentPage === 'CUSTOMIZE'" class="states flexed col">
+  <div *ngIf="(store.currentPage$|async) === pages.CUSTOMIZE" class="states flexed col">
     <app-customize-card></app-customize-card>
   </div>
 
-  <div *ngIf="currentPage === 'PREVIEW'" class="states flexed col padded">
+  <div *ngIf="(store.currentPage$|async) === pages.PREVIEW" class="states flexed col padded">
     <span class="spacer"></span>
 
     <div class="final-card">
-      <app-card [card]="createSvc.card"></app-card>
+      <app-card *ngIf="(store.card$|async) as card" [card]="card"></app-card>
     </div>
 
     <div class="sized-box"></div>
 
     <div class="flexed center padded">
-      <button (click)="saveCard()" class="btn outline accent" [disabled]="canSubmit">
+      <button (click)="saveCard()" class="btn outline accent" [disabled]="(store.isValid$|async)">
         <span>PUBLICAR</span>
       </button>
     </div>

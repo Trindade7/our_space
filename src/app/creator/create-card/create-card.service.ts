@@ -7,108 +7,140 @@ import { StoreGeneric, StoreModel } from '@app-core/store.generic';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-// TODO: #1 add feature create card
+interface CardCreator { id: string; name: string; email: string; }
 @Injectable({
   providedIn: 'root'
 })
 export class CreateCardService {
   private _cardsPath = 'cards';
-  private _cardBackgroundsPath = 'assets';
-
-  private _card: CardModel;
 
   constructor (
     private _dbSvc: DatabaseService,
     private _authSvc: AuthService,
     private _store: CreateCardStore
   ) {
-    this._card = newCard();
-    this._authSvc.user().then(user => this._card.creator = {
-      name: user.name,
-      email: user.email
+    this._authSvc.user().then(user => {
+      const creator = {
+        id: user.id,
+        name: user.name,
+        email: user.email
+      };
+
+      const card = newCard();
+      card.creator = {
+        id: user.id,
+        name: user.name,
+        email: user.email
+      };
+      this._store.patch({ card, creator },);
     });
   }
 
-  get card(): CardModel {
-    return this._card;
-  }
-
-  set setCardBackground(background: CardBackgroungModel) {
-    this._card.background = background;
-    this._updateCard();
-  }
-  set setCardBackgroundSize(size: number) {
-    this._card.background.size = size;
-    this._updateCard();
-  }
-  set setTextColor(color: string) {
-    this._card.textColor = color;
-    this._updateCard();
-  }
-
-  get currentPage$(): Observable<PAGES> {
-    return this._store.state$.pipe(
-      map(
-        state => state.currentPage
-      )
-    );
-  }
-
-  nextPage(): void {
-    if (this._store.state.currentPage === 2) {
-      logger.collapsed('[create-card.service] nextState()', ['already on last page']);
-      return;
-    }
-
-    this._store.patch({ currentPage: this._store.state.currentPage + 1 }, 'next page');
-  }
-
-  prevPage(): void {
-    if (this._store.state.currentPage === 0) {
-      logger.collapsed('[create-card.service] prevState()', ['already on first page']);
-      return;
-    }
-    this._store.patch({ currentPage: this._store.state.currentPage - 1 }, 'prev page');
-  }
-
-  private _updateCard() {
-    // !re-renders card preview component
-    this._card = { ...this._card };
-  }
-
   saveCard(): Promise<void> {
-    logger.startCollapsed('[create-card.service] createCard()', [this._card]);
+    logger.startCollapsed('[create-card.service] createCard()');
+    this._store.patch({ loading: true });
 
-    return this._dbSvc.create<CardModel>(this.card, this._cardsPath)
-      .then(() => {
-        this._card = newCard();
-        this._store.patch({ currentPage: PAGES.TEXT }, 'Reset card');
+    return this._store.card$.pipe(
+      map(card => {
+        this._dbSvc.create<CardModel>(card, this._cardsPath).then(
+          () => this._store.resetCard()
+        ).finally(() => {
+          this._store.patch({ loading: false });
+          logger.endCollapsed([]);
+        });
       })
-      .finally(() => logger.endCollapsed([]));
+    ).toPromise();
   }
 }
-
 
 
 // *################## CREATE STORE STATE ###################
-export enum PAGES {
-  TEXT,
-  CUSTOMIZE,
-  PREVIEW
-}
+export enum PAGES { 'TEXT', 'CUSTOMIZE', 'PREVIEW' };
 interface CreateCardModel extends StoreModel {
   currentPage: PAGES;
+  card: CardModel;
+  creator: CardCreator;
 }
 
 @Injectable({ providedIn: 'root' })
-class CreateCardStore extends StoreGeneric<CreateCardModel>{
+export class CreateCardStore extends StoreGeneric<CreateCardModel>{
   protected store = 'CreateCard-store';
 
   constructor () {
     super({
       loading: false,
       error: null,
-      currentPage: PAGES.TEXT
+      currentPage: PAGES.TEXT,
+      card: newCard()
     });
+  }
+
+  get currentPage$(): Observable<PAGES> {
+    return this.state$.pipe(
+      map(state => {
+        return state.currentPage;
+      })
+    );
+  }
+
+  get card$(): Observable<CardModel> {
+    return this.state$.pipe(
+      map(state => state.card)
+    );
+  }
+
+  get isValid$(): Observable<boolean> {
+    return this.state$.pipe(
+      map(state => !(state.card.message.length > 5))
+    );
+  }
+
+  set background(background: CardBackgroungModel) {
+    const card = this.state.card;
+    card.background = background;
+
+    this.patch({ card }, `change background to ${background}`);
+  }
+
+  set backgroundSize(size: number) {
+    const card = this.state.card;
+    card.background.size = size;
+
+    this.patch({ card }, `change background size to ${size}`);
+  }
+
+  set message(message: string) {
+    const card = this.state.card;
+    card.message = message;
+
+    this.patch({ card }, `change background message to ${message}`);
+  }
+
+  set textColor(color: string) {
+    const card = this.state.card;
+    card.textColor = color;
+
+    this.patch({ card }, `change textColor to ${color}`);
+  }
+
+  resetCard(): void {
+    const card = newCard();
+    card.creator = this.state.creator;
+    this.patch({ card }, `Reset card`);
+  }
+
+  nextPage(): void {
+    if (this.state.currentPage === 2) {
+      return;
+    }
+
+    this.patch({ currentPage: this.state.currentPage + 1 }, 'next page');
+  }
+
+  prevPage(): void {
+    if (this.state.currentPage === 0) {
+      return;
+    }
+    this.patch({ currentPage: this.state.currentPage - 1 }, 'prev page');
   }
 }

@@ -27,6 +27,7 @@ export interface CardModel {
         seconds: number;
     };
     creator: {
+        id: string;
         name: string,
         email: string;
     };
@@ -54,6 +55,7 @@ export function newCard(cardIn?: CardModel): CardModel {
         textStrokeColor: 'transparent',
         font: newCardFont(),
         creator: {
+            id: randomString(1),
             name: 'testing',
             email: 'trindade.jose77@gmail.com'
         },
@@ -65,7 +67,7 @@ export function newCard(cardIn?: CardModel): CardModel {
 export function mockCard(): CardModel {
     const newDate = new Date();
     return {
-        id: randomString(3, ''),
+        id: randomString(1),
         message: randomString(100),
         textStrokeColor: 'transparent',
         textColor: randomColor(),
@@ -75,6 +77,7 @@ export function mockCard(): CardModel {
             seconds: newDate.getSeconds()
         },
         creator: {
+            id: randomString(1),
             name: 'testing',
             email: 'trindade.jose77@gmail.com'
         },
