@@ -16,8 +16,7 @@ export class CustomizeCardService {
       'cardBackgrounds',
       this._assetsPath
     ).pipe(
-      map(backgroundList => backgroundList ? backgroundList.items : [])
-
+      map(backgroundList => backgroundList ? backgroundList.items : []),
     );
 
   }

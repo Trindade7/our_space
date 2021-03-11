@@ -6,7 +6,6 @@ import { Observable, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 
 import { DatabaseService } from './database.service';
-import { Logger as logger } from './helpers/logger';
 import { UserModel } from './models/user.model';
 
 @Injectable({
@@ -34,7 +33,7 @@ export class AuthService {
   }
 
   private _processUserData(credential: firebase.auth.UserCredential): Promise<void> {
-    logger.collapsed('[fireauth.service] _processUserData', [credential]);
+    // logger.collapsed('[fireauth.service] _processUserData', [credential]);
 
     if (credential.additionalUserInfo?.isNewUser) {
       const user = this._parseFireUserToUser(credential.user);

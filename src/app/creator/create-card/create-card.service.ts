@@ -7,49 +7,58 @@ import { StoreGeneric, StoreModel } from '@app-core/store.generic';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-interface CardCreator { id: string; name: string; email: string; }
+interface CardCreatorModel { id: string; name: string; email: string; }
 @Injectable({
   providedIn: 'root'
 })
 export class CreateCardService {
-  private _cardsPath = 'cards';
+  private _cardsPath = 'pairs';
 
   constructor (
     private _dbSvc: DatabaseService,
     private _authSvc: AuthService,
     private _store: CreateCardStore
   ) {
-    this._authSvc.user().then(user => {
-      const creator = {
-        id: user.id,
-        name: user.name,
-        email: user.email
-      };
+    this._authSvc.userOrNull$.pipe(
+      map(user => {
+        if (!user) {
+          throw new Error("Not logged in");
+        }
+        const creator = {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+        };
 
-      const card = newCard();
-      card.creator = {
-        id: user.id,
-        name: user.name,
-        email: user.email
-      };
-      this._store.patch({ card, creator },);
+        let pair = '';
+        if (user.pairs) {
+          pair = `pairs/${user.pairs[0]}/cards`;
+        } else {
+          pair = `pairs/${user.id}/cards`;
+        }
+
+        return { creator, pair };
+      })
+    ).subscribe(({ creator, pair }) => {
+      this._cardsPath = pair;
+      logger.collapsed('[create-card.service] pairPath', [pair]);
+      this._store.patch({ creator }, 'Creator update');
     });
   }
 
-  saveCard(): Promise<void> {
+  saveCard(): Promise<any> {
+    this._store.patch({ loading: true }, 'loading => true');
     logger.startCollapsed('[create-card.service] createCard()');
-    this._store.patch({ loading: true });
+    this._store.card.creator = this._store.creator;
 
-    return this._store.card$.pipe(
-      map(card => {
-        this._dbSvc.create<CardModel>(card, this._cardsPath).then(
-          () => this._store.resetCard()
-        ).finally(() => {
-          this._store.patch({ loading: false });
-          logger.endCollapsed([]);
-        });
-      })
-    ).toPromise();
+    logger.collapsed('store.card data', [this._store.card]);
+
+    return this._dbSvc.create<CardModel>(this._store.card, this._cardsPath).then(
+      () => this._store.resetCard()
+    ).finally(() => {
+      this._store.patch({ loading: false }, 'loading => false');
+      logger.endCollapsed([]);
+    });
   }
 }
 
@@ -58,20 +67,19 @@ export class CreateCardService {
 export enum PAGES { 'TEXT', 'CUSTOMIZE', 'PREVIEW' };
 interface CreateCardModel extends StoreModel {
   currentPage: PAGES;
-  card: CardModel;
-  creator: CardCreator;
+  creator: CardCreatorModel;
 }
 
 @Injectable({ providedIn: 'root' })
 export class CreateCardStore extends StoreGeneric<CreateCardModel>{
   protected store = 'CreateCard-store';
+  card: CardModel = newCard();
 
   constructor () {
     super({
       loading: false,
       error: null,
       currentPage: PAGES.TEXT,
-      card: newCard()
     });
   }
 
@@ -81,52 +89,6 @@ export class CreateCardStore extends StoreGeneric<CreateCardModel>{
         return state.currentPage;
       })
     );
-  }
-
-  get card$(): Observable<CardModel> {
-    return this.state$.pipe(
-      map(state => state.card)
-    );
-  }
-
-  get isValid$(): Observable<boolean> {
-    return this.state$.pipe(
-      map(state => !(state.card.message.length > 5))
-    );
-  }
-
-  set background(background: CardBackgroungModel) {
-    const card = this.state.card;
-    card.background = background;
-
-    this.patch({ card }, `change background to ${background}`);
-  }
-
-  set backgroundSize(size: number) {
-    const card = this.state.card;
-    card.background.size = size;
-
-    this.patch({ card }, `change background size to ${size}`);
-  }
-
-  set message(message: string) {
-    const card = this.state.card;
-    card.message = message;
-
-    this.patch({ card }, `change background message to ${message}`);
-  }
-
-  set textColor(color: string) {
-    const card = this.state.card;
-    card.textColor = color;
-
-    this.patch({ card }, `change textColor to ${color}`);
-  }
-
-  resetCard(): void {
-    const card = newCard();
-    card.creator = this.state.creator;
-    this.patch({ card }, `Reset card`);
   }
 
   nextPage(): void {
@@ -142,5 +104,28 @@ export class CreateCardStore extends StoreGeneric<CreateCardModel>{
       return;
     }
     this.patch({ currentPage: this.state.currentPage - 1 }, 'prev page');
+  }
+
+  set background(backgroundData: CardBackgroungModel) {
+    this.card.background = backgroundData;
+    this.card = Object.assign({}, this.card);
+  }
+  set backgroundSize(size: number) {
+    this.card.background.size = size;
+    this.card = Object.assign({}, this.card);
+  }
+
+  get isValid(): boolean {
+    return !(this.card.message.length > 5);
+  }
+
+  get creator(): CardCreatorModel {
+    return this.state.creator;
+  }
+
+  resetCard(): void {
+    this.card = newCard();
+    this.card.creator = this.state.creator;
+    this.patch({ currentPage: PAGES.TEXT });
   }
 }

@@ -32,7 +32,7 @@ export class NewBackgroundService {
           { arrayKey: 'items', vals: [background] }
         );
       },
-      err => logger.startCollapsed('[new-background.service] ERROR: addBackground()', [err])
+      err => logger.collapsed('[new-background.service] ERROR: addBackground()', [err])
     );
   }
 }

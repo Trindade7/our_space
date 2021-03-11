@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { CardBackgroungModel, CardModel, createColorBackground } from '@app-core/models/card.model';
+import { CardBackgroungModel, createColorBackground } from '@app-core/models/card.model';
 
 import { CreateCardService, CreateCardStore } from '../create-card.service';
 import { CustomizeCardService } from './customize-card.service';
@@ -25,7 +25,6 @@ const TEXT_COLORS = [
 export class CustomizeCardComponent implements OnInit {
   customizingZone: 'background' | 'color' | 'font' = 'background';
 
-  card!: CardModel;
   textColors: string[] = TEXT_COLORS;
   backgroundColors!: CardBackgroungModel[];
 
@@ -37,13 +36,9 @@ export class CustomizeCardComponent implements OnInit {
     this.backgroundColors = this.textColors.map(
       color => createColorBackground(color)
     );
-    this.store.card$.subscribe(card => {
-      this.card = Object.assign({}, card); // to repaint background
-    });
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { }
 
   setBackground(background: CardBackgroungModel) {
     this.store.background = background;

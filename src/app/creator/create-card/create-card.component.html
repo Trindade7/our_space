@@ -26,7 +26,7 @@
       </button>
 
       <button *ngIf="(store.currentPage$|async)===pages.PREVIEW" (click)="saveCard()" class="btn accent circle text"
-        [disabled]="(store.isValid$ | async)">
+        [disabled]="store.isValid">
         <i class="bi bi-check-circle-fill"></i>
       </button>
     </div>
@@ -43,12 +43,12 @@
 
       <div class="message padded">
         <textarea #messageInput class="message-input" name="message" id="message-input" rows="10"
-          [(ngModel)]="store.message">
+          [(ngModel)]="store.card.message">
                 </textarea>
       </div>
 
       <div class="flexed center padded">
-        <button (click)="store.nextPage()" class="btn icon outline" [disabled]="(store.isValid$|async)">
+        <button (click)="store.nextPage()" class="btn icon outline" [disabled]="store.isValid">
           <span>Escolher fundo</span>
         </button>
       </div>
@@ -66,13 +66,13 @@
     <span class="spacer"></span>
 
     <div class="final-card">
-      <app-card *ngIf="(store.card$|async) as card" [card]="card"></app-card>
+      <app-card [card]="store.card"></app-card>
     </div>
 
     <div class="sized-box"></div>
 
     <div class="flexed center padded">
-      <button (click)="saveCard()" class="btn outline accent" [disabled]="(store.isValid$|async)">
+      <button (click)="saveCard()" class="btn outline accent" [disabled]="!store.isValid">
         <span>PUBLICAR</span>
       </button>
     </div>
