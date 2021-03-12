@@ -1,27 +1,16 @@
 # OurSpace
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.0.5.
+This project was generated with #Angular [Angular CLI](https://github.com/angular/angular-cli) version 11.0.5.
 
-## Development server
+I created this app as a gift for my significant other since
+We are in a long distance relationship. The idea is that each week we write each other a card about us. The app is now being expanded so other people can create their accounts and do the same.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+### Tools stack
 
-## Code scaffolding
+I used the **[Angulart](https://angular.io/)** framework for the frontend, with **Typescript** and **Sass**. The backend uses **[firebase](https://firebase.google.com/)** for Authentication and database. I’m quite familiar with both which sped up the development process. Furthermore, since SEO is not a priority for this app, i.e. no SSR needed, I can host it on Firebase Hosting for free.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+For the styling, I wrote my own instead of relying on a library because the project is quite simple, no fancy things required at the moment, and, no visual library seems to fit in well with the style I’m going for.
 
-## Build
+### Check it out
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+The project is open source under the MIT license. You are free to use/improve on it, if you fork it please refer the original Project &#x1f609;. To see the app in action check the [DEMO](https://isourspace.web.app/).
