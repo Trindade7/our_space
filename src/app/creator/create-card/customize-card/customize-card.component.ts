@@ -26,7 +26,7 @@ export class CustomizeCardComponent implements OnInit {
   customizingZone: 'background' | 'color' | 'font' = 'background';
 
   textColors: string[] = TEXT_COLORS;
-  backgroundColors!: CardBackgroungModel[];
+  backgroundColors: CardBackgroungModel[];
 
   constructor (
     public crateCardSvc: CreateCardService,

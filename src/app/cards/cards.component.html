@@ -7,7 +7,9 @@
     <!-- <button class="btn circle text">
       <i class="bi bi-grid-fill"></i>
     </button> -->
-    <i class="bi bi-grid-fill menu-control" (click)="showMenu = !showMenu"></i>
+    <button class="btn">
+      <i class="bi bi-grid-fill menu-control small" (click)="showMenu = !showMenu"></i>
+    </button>
   </nav>
 
   <div class="app-menu" [ngClass]="{'active': showMenu}">
@@ -16,7 +18,7 @@
 
   <span class="spacer"></span>
 
-  <div class="cards flexed padded-x padded-05-y" *ngIf="cards$ |async as cards; else loadingCardsTemplate">
+  <div class="cards flexed padded-x padded-05-y" *ngIf="cardsSvc.cards$ | async as cards; else loadingCardsTemplate">
     <div *ngFor="let card of cards" class="card">
       <app-card tabindex="2" [card]="card" [routerLink]="card.id"></app-card>
     </div>

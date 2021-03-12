@@ -76,7 +76,7 @@ export class DatabaseService {
     path: string,
     query: CollectionQueryModel = this._defaultQuery
   ): Observable<T[]> {
-    logger.collapsed('[database.service] collection$', [query]);
+    logger.collapsed(`[database.service] [collection$] from ${path}`, [query]);
 
     return this._firestore
       .collection<T>(path, ref => {
@@ -88,7 +88,8 @@ export class DatabaseService {
       })
       .valueChanges({ idField: 'id' })
       .pipe(
-        watch('[database.service] collection$()', 2)
+        watch('[database.service] collection$()', 2),
+        tap(data => logger.collapsed('[database.service] collection$', [data]))
       );
   }
 
@@ -101,7 +102,7 @@ export class DatabaseService {
     path: string,
     query: Partial<CollectionQueryModel> = this._defaultQuery
   ): Promise<T[]> {
-    logger.collapsed('[database.service] collection', [query]);
+    logger.collapsed(`[database.service] [collection] from ${path}`, [query]);
 
     return this._firestore
       .collection<T>(path, ref => {
@@ -122,7 +123,7 @@ export class DatabaseService {
   }
 
   docOrNull$<T>(id: string, collectionPath: string): Observable<T | null> {
-    logger.collapsed('[database.service] [docOrNull$()]', [
+    logger.collapsed(`[database.service] [docOrNull$()] from ${collectionPath}`, [
       `\ngetting doc from ${collectionPath} with id: ${id}`,
     ]);
 

@@ -24,24 +24,23 @@ export class CreateCardService {
         if (!user) {
           throw new Error("Not logged in");
         }
-        const creator = {
-          id: user.id,
-          name: user.name,
-          email: user.email,
+
+        return {
+          creator: {
+            id: user.id,
+            name: user.name,
+            email: user.email,
+          },
+          pairs: user.pairs
         };
-
-        let pair = '';
-        if (user.pairs) {
-          pair = `pairs/${user.pairs[0]}/cards`;
-        } else {
-          pair = `pairs/${user.id}/cards`;
-        }
-
-        return { creator, pair };
       })
-    ).subscribe(({ creator, pair }) => {
-      this._cardsPath = pair;
-      logger.collapsed('[create-card.service] pairPath', [pair]);
+    ).subscribe(({ creator, pairs }) => {
+      if (pairs?.length) {
+        this._cardsPath = `pairs/${pairs[0]}/cards`;
+      } else {
+        this._cardsPath = `pairs/${creator.id}/cards`;
+      }
+
       this._store.patch({ creator }, 'Creator update');
     });
   }
