@@ -1,49 +1,28 @@
 import { Component, OnInit } from '@angular/core';
 import { Logger as logger } from '@app-core/helpers/logger';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { AppService } from 'src/app/app.service';
 
-import { CreateCardService } from './create-card.service';
+import { CreateCardService, CreateCardStore, PAGES } from './create-card.service';
 
 @Component({
   templateUrl: './create-card.component.html',
   styleUrls: ['./create-card.component.scss']
 })
 export class CreateCardComponent implements OnInit {
-  currentPage!: string;
-  pageIsloading = false;
-
-  showNextPageButton = true;
-  showPrevPageButton = false;
-  showSubmitButton = false;
-
-  canSubmit = false;
+  pages = PAGES;
+  pageName: Observable<string>;
 
   constructor (
     public appSvc: AppService,
-    public createSvc: CreateCardService
-  ) {
-    this.createSvc.currentPage$.subscribe(
-      page => {
-        switch (page) {
-          case 0:
-            this.currentPage = 'TEXT';
-            this.showPrevPageButton = false;
-            this.showNextPageButton = true;
-            break;
-          case 1:
-            this.currentPage = 'CUSTOMIZE';
-            this.showPrevPageButton = true;
-            this.showNextPageButton = true;
-            this.showSubmitButton = false;
-            break;
+    public createSvc: CreateCardService,
+    public store: CreateCardStore
 
-          default:
-            this.currentPage = 'PREVIEW';
-            this.showNextPageButton = false;
-            this.showSubmitButton = true;
-            break;
-        }
-      });
+  ) {
+    this.pageName = this.store.currentPage$.pipe(
+      map(index => ['TEXT', 'CUSTOMIZE', 'PREVIEW'][index])
+    );
   }
 
   ngOnInit(): void {
@@ -54,13 +33,12 @@ export class CreateCardComponent implements OnInit {
     if (!confirmSave) {
       return;
     }
-    this.pageIsloading = true;
+
     this.createSvc.saveCard()
       .then(() => alert('Salvo com sucesso :)'))
       .catch(err => {
         logger.collapsed('[create-card.component] saveCard()', [{ err }]);
         alert('ERRO AO SALVAR :(');
-      })
-      .finally(() => this.pageIsloading = false);
+      });
   }
 }

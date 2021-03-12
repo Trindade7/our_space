@@ -2,9 +2,8 @@
   <span class="spacer  display-md-only"></span>
 
   <div class="card-preview padded">
-    <app-card [card]="crateCardSvc.card"></app-card>
+    <app-card [card]="store.card"></app-card>
   </div>
-
   <div *ngIf="customizingZone === 'background'" class="background-picker padded">
     <header class="flexed">
       <b class="padded-05-y">Fundo</b>
@@ -13,7 +12,7 @@
 
       <div class="contolls">
         <input type="range" min="100" max="1080" value="250" class="slider" id="background-range"
-          [(ngModel)]="crateCardSvc.setCardBackgroundSize">
+          [(ngModel)]="store.backgroundSize">
       </div>
     </header>
 
@@ -31,13 +30,14 @@
     <b class="padded-05-y">Cor do Texto</b>
 
     <div class="colors flexed">
-      <div *ngFor="let color of textColors" (click)="crateCardSvc.setTextColor = color"
-        [ngStyle]="{'background': color}" class="color">
+      <div *ngFor="let color of textColors" (click)="store.card.textColor = color" [ngStyle]="{'background': color}"
+        class="color">
       </div>
     </div>
   </div>
 
-  <div *ngIf="customizingZone === 'font'" class="color-picker padded">
+  <!-- TODO: ADD TEXT STYLES
+    <div *ngIf="customizingZone === 'font'" class="color-picker padded">
     <header class="flexed">
       <b class="padded-05-y">Fonte</b>
 
@@ -45,14 +45,14 @@
 
       <div class="contolls">
         <input type="range" min="100" max="1080" value="250" class="slider" id="background-range"
-          [(ngModel)]="crateCardSvc.setCardBackgroundSize">
+          [(ngModel)]="store.backgroundSize">
       </div>
     </header>
 
     <div class="fonts flexed center">
       <h1>coming soon</h1>
     </div>
-  </div>
+  </div> -->
 
   <span class="spacer  display-md-only"></span>
 
@@ -69,11 +69,12 @@
       <small>Cor do texto</small>
     </button>
 
-    <button (click)="customizingZone= 'font'" class="btn flexed col center"
+    <!-- TODO: ADD TEXT STYLES
+      <button (click)="customizingZone= 'font'" class="btn flexed col center"
       [ngClass]="{'text-primary': customizingZone === 'font'}">
       <i class="bi bi-file-font-fill"></i>
       <small>Fonte</small>
-    </button>
+    </button> -->
   </nav>
 
 </div>

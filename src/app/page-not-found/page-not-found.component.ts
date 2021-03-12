@@ -2,29 +2,45 @@ import { Location } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 
 @Component({
-  templateUrl: './page-not-found.component.html',
-  styleUrls: ['./page-not-found.component.scss']
+  template: `
+    <div class="not-found-page flexed col center">
+      <h2>Nothing here :(</h2>
+
+      <div class="sized-box-2"></div>
+
+      <strong>Redirecting to homepage in {{counter}} </strong>
+      <a [routerLink]="['/cards']" class="btn outline">
+        HOME
+      </a>
+    </div>
+`,
+  styles: [`
+    .not-found-page{
+    height: 100vh;
+    text-align: center;
+    }
+  `]
 })
 export class PageNotFoundComponent implements OnInit, OnDestroy {
-  counter = 2;
-  constructor (private _location: Location) { }
+  counter = 3;
+  interval: any;
+
+  constructor (public location: Location) { }
 
   ngOnInit(): void {
     this.startTimer();
   }
 
   startTimer(): void {
-    setInterval(() => {
+    this.interval = setInterval(() => {
       if (this.counter <= 0) {
-        this._location.back();
+        this.location.back();
       } else {
-        console.log(this.counter);
-        this.counter = this.counter - 1;
+        this.counter--;
       }
-    }, 3000);
+    }, 1000);
   }
-
   ngOnDestroy(): void {
-    this.counter = 3;
+    clearInterval(this.interval);
   }
 }

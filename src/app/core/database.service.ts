@@ -3,7 +3,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import firebase from 'firebase/app';
 import { Observable } from 'rxjs';
 import { watch } from 'rxjs-watcher';
-import { map, take, tap } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 
 import { Logger as logger } from './helpers/logger';
 
@@ -76,7 +76,7 @@ export class DatabaseService {
     path: string,
     query: CollectionQueryModel = this._defaultQuery
   ): Observable<T[]> {
-    logger.collapsed('[database.service] collection$', [query]);
+    logger.collapsed(`[database.service] [collection$] from ${path}`, [query]);
 
     return this._firestore
       .collection<T>(path, ref => {
@@ -89,9 +89,7 @@ export class DatabaseService {
       .valueChanges({ idField: 'id' })
       .pipe(
         watch('[database.service] collection$()', 2),
-        tap(val =>
-          logger.collapsed('[database.service] products() tap val =>\n', [val])
-        )
+        tap(data => logger.collapsed('[database.service] collection$', [data]))
       );
   }
 
@@ -104,7 +102,7 @@ export class DatabaseService {
     path: string,
     query: Partial<CollectionQueryModel> = this._defaultQuery
   ): Promise<T[]> {
-    logger.collapsed('[database.service] collection', [query]);
+    logger.collapsed(`[database.service] [collection] from ${path}`, [query]);
 
     return this._firestore
       .collection<T>(path, ref => {
@@ -125,8 +123,8 @@ export class DatabaseService {
   }
 
   docOrNull$<T>(id: string, collectionPath: string): Observable<T | null> {
-    logger.startCollapsed('[database.service] [docOrNull$()]', [
-      { log: ['id:', id], type: 'warn' },
+    logger.collapsed(`[database.service] [docOrNull$()] from ${collectionPath}`, [
+      `\ngetting doc from ${collectionPath} with id: ${id}`,
     ]);
 
     const fullPath = `${collectionPath}/${id}`;
@@ -138,9 +136,9 @@ export class DatabaseService {
         tap(
           // LOGGING DATA
           val =>
-            logger.endCollapsed([`RESPONSE streaming from [${fullPath}]`, val]),
+            logger.collapsed(`RESPONSE streaming from [${fullPath}]`, [val]),
           err =>
-            logger.endCollapsed([`ERROR streaming from [${fullPath}] `, err])
+            logger.collapsed(`ERROR streaming from [${fullPath}] `, [err])
         ),
         map(doc => (doc ? ((doc as unknown) as T) : null))
       );
@@ -151,30 +149,19 @@ export class DatabaseService {
    * Returns a document snapshot.
    *
    */
-  docOrNull<T>(id: string, collectionPath: string): Promise<T | null> {
-    logger.startCollapsed('[database.service] [docOrNull()]', [
-      { log: ['id:', id, '\ncollectionPath', collectionPath], type: 'warn' },
-    ]);
+  // docOrNull<T>(id: string, collectionPath: string): Promise<T | null> {
+  //   logger.startCollapsed('[database.service] [docOrNull()]', [
+  //     { log: ['id:', id, '\ncollectionPath', collectionPath], type: 'warn' },
+  //   ]);
 
-    return this._firestore
-      .doc<T>(`${collectionPath}/${id}`)
-      .valueChanges({ idField: 'id' })
-      .pipe(
-        map(doc => (doc as unknown) as T),
-        take(1)
-      )
-      .toPromise();
-  }
-  // docOrNull<T>(id: string, collectionPath: string): Promise<T> {
-  //   logger.startCollapsed(
-  //     `[database.service] [docOrNull()]`,
-  //     [{ log: ['id:', id, '\ncollectionPath', collectionPath], type: 'warn' }]
-  //   );
-
-  //   return this._firestore.doc<T>(`${collectionPath}/${id}`).get().pipe(
-  //     map(doc => doc.data as unknown as T),
-  //     watch(`[database.service] docOrNull$`, 10)
-  //   ).toPromise();
+  //   return this._firestore
+  //     .doc<T>(`${collectionPath}/${id}`)
+  //     .valueChanges({ idField: 'id' })
+  //     .pipe(
+  //       map(doc => (doc as unknown) as T),
+  //       take(1)
+  //     )
+  //     .toPromise();
   // }
 
   create<T>(
@@ -220,7 +207,7 @@ export class DatabaseService {
     addToArray?: { arrayKey: string, vals: any[]; },
     removeFromArray?: { arrayKey: string, vals: any[]; }
   ): Promise<void> {
-    logger.startCollapsed('[database.service] [update()]', [
+    logger.collapsed('[database.service] [update()]', [
       `documentId: ${docId}`,
       'document',
       document,
@@ -238,12 +225,11 @@ export class DatabaseService {
     return this._firestore
       .collection(collectionPath)
       .doc(docId)
-      .update({ ...document })
-      .then(() => logger.endCollapsed());
+      .update({ ...document });
   }
 
   delete(id: string, collectionPath: string): Promise<void> {
-    logger.startCollapsed('[database.service] [delete()]', [
+    logger.collapsed('[database.service] [delete()]', [
       `documentId: ${id}`,
       `path: ${collectionPath}`,
     ]);
@@ -260,7 +246,7 @@ export class DatabaseService {
   // }
 
   batchWrite(batchDocs: BatchDocModel[]): Promise<void> {
-    logger.startCollapsed('[database.service] #batchWriteDoc', [batchDocs]);
+    logger.collapsed('[database.service] #batchWriteDoc', [batchDocs]);
 
     const batch = this._firestore.firestore.batch();
 
@@ -276,7 +262,7 @@ export class DatabaseService {
 
     return batch
       .commit()
-      .finally(() => logger.endCollapsed(['[database.service] end']));
+      .finally(() => logger.collapsed('[database.service] end', []));
   }
 
   // *#################### FIRE STORAGE

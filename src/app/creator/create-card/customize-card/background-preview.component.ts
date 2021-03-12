@@ -51,7 +51,6 @@ export class BackgroundPreviewComponent implements OnInit {
 
   ngOnInit(): void {
     const bck = this.background;
-    console.log({ bck });
   }
 
   setBackground() {

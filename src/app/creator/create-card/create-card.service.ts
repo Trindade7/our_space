@@ -7,108 +7,124 @@ import { StoreGeneric, StoreModel } from '@app-core/store.generic';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-// TODO: #1 add feature create card
+interface CardCreatorModel { id: string; name: string; email: string; }
 @Injectable({
   providedIn: 'root'
 })
 export class CreateCardService {
-  private _cardsPath = 'cards';
-  private _cardBackgroundsPath = 'assets';
-
-  private _card: CardModel;
+  private _cardsPath = 'pairs';
 
   constructor (
     private _dbSvc: DatabaseService,
     private _authSvc: AuthService,
     private _store: CreateCardStore
   ) {
-    this._card = newCard();
-    this._authSvc.user().then(user => this._card.creator = {
-      name: user.name,
-      email: user.email
+    this._authSvc.userOrNull$.pipe(
+      map(user => {
+        if (!user) {
+          throw new Error("Not logged in");
+        }
+
+        return {
+          creator: {
+            id: user.id,
+            name: user.name,
+            email: user.email,
+          },
+          pairs: user.pairs
+        };
+      })
+    ).subscribe(({ creator, pairs }) => {
+      if (pairs?.length) {
+        this._cardsPath = `pairs/${pairs[0]}/cards`;
+      } else {
+        this._cardsPath = `pairs/${creator.id}/cards`;
+      }
+
+      this._store.patch({ creator }, 'Creator update');
     });
   }
 
-  get card(): CardModel {
-    return this._card;
-  }
+  saveCard(): Promise<any> {
+    this._store.patch({ loading: true }, 'loading => true');
+    logger.startCollapsed('[create-card.service] createCard()');
+    this._store.card.creator = this._store.creator;
 
-  set setCardBackground(background: CardBackgroungModel) {
-    this._card.background = background;
-    this._updateCard();
-  }
-  set setCardBackgroundSize(size: number) {
-    this._card.background.size = size;
-    this._updateCard();
-  }
-  set setTextColor(color: string) {
-    this._card.textColor = color;
-    this._updateCard();
-  }
+    logger.collapsed('store.card data', [this._store.card]);
 
-  get currentPage$(): Observable<PAGES> {
-    return this._store.state$.pipe(
-      map(
-        state => state.currentPage
-      )
-    );
-  }
-
-  nextPage(): void {
-    if (this._store.state.currentPage === 2) {
-      logger.collapsed('[create-card.service] nextState()', ['already on last page']);
-      return;
-    }
-
-    this._store.patch({ currentPage: this._store.state.currentPage + 1 }, 'next page');
-  }
-
-  prevPage(): void {
-    if (this._store.state.currentPage === 0) {
-      logger.collapsed('[create-card.service] prevState()', ['already on first page']);
-      return;
-    }
-    this._store.patch({ currentPage: this._store.state.currentPage - 1 }, 'prev page');
-  }
-
-  private _updateCard() {
-    // !re-renders card preview component
-    this._card = { ...this._card };
-  }
-
-  saveCard(): Promise<void> {
-    logger.startCollapsed('[create-card.service] createCard()', [this._card]);
-
-    return this._dbSvc.create<CardModel>(this.card, this._cardsPath)
-      .then(() => {
-        this._card = newCard();
-        this._store.patch({ currentPage: PAGES.TEXT }, 'Reset card');
-      })
-      .finally(() => logger.endCollapsed([]));
+    return this._dbSvc.create<CardModel>(this._store.card, this._cardsPath).then(
+      () => this._store.resetCard()
+    ).finally(() => {
+      this._store.patch({ loading: false }, 'loading => false');
+      logger.endCollapsed([]);
+    });
   }
 }
-
 
 
 // *################## CREATE STORE STATE ###################
-export enum PAGES {
-  TEXT,
-  CUSTOMIZE,
-  PREVIEW
-}
+export enum PAGES { 'TEXT', 'CUSTOMIZE', 'PREVIEW' };
 interface CreateCardModel extends StoreModel {
   currentPage: PAGES;
+  creator: CardCreatorModel;
 }
 
 @Injectable({ providedIn: 'root' })
-class CreateCardStore extends StoreGeneric<CreateCardModel>{
+export class CreateCardStore extends StoreGeneric<CreateCardModel>{
   protected store = 'CreateCard-store';
+  card: CardModel = newCard();
 
   constructor () {
     super({
       loading: false,
       error: null,
-      currentPage: PAGES.TEXT
+      currentPage: PAGES.TEXT,
     });
+  }
+
+  get currentPage$(): Observable<PAGES> {
+    return this.state$.pipe(
+      map(state => {
+        return state.currentPage;
+      })
+    );
+  }
+
+  nextPage(): void {
+    if (this.state.currentPage === 2) {
+      return;
+    }
+
+    this.patch({ currentPage: this.state.currentPage + 1 }, 'next page');
+  }
+
+  prevPage(): void {
+    if (this.state.currentPage === 0) {
+      return;
+    }
+    this.patch({ currentPage: this.state.currentPage - 1 }, 'prev page');
+  }
+
+  set background(backgroundData: CardBackgroungModel) {
+    this.card.background = backgroundData;
+    this.card = Object.assign({}, this.card);
+  }
+  set backgroundSize(size: number) {
+    this.card.background.size = size;
+    this.card = Object.assign({}, this.card);
+  }
+
+  get isValid(): boolean {
+    return !(this.card.message.length > 5);
+  }
+
+  get creator(): CardCreatorModel {
+    return this.state.creator;
+  }
+
+  resetCard(): void {
+    this.card = newCard();
+    this.card.creator = this.state.creator;
+    this.patch({ currentPage: PAGES.TEXT });
   }
 }

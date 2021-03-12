@@ -7,12 +7,18 @@
     <!-- <button class="btn circle text">
       <i class="bi bi-grid-fill"></i>
     </button> -->
-    <i class="bi bi-grid-fill"></i>
+    <button class="btn">
+      <i class="bi bi-grid-fill menu-control small" (click)="showMenu = !showMenu"></i>
+    </button>
   </nav>
+
+  <div class="app-menu" [ngClass]="{'active': showMenu}">
+    <app-menu></app-menu>
+  </div>
 
   <span class="spacer"></span>
 
-  <div class="cards flexed padded-x padded-05-y" *ngIf="cards$ |async as cards; else loadingCardsTemplate">
+  <div class="cards flexed padded-x padded-05-y" *ngIf="cardsSvc.cards$ | async as cards; else loadingCardsTemplate">
     <div *ngFor="let card of cards" class="card">
       <app-card tabindex="2" [card]="card" [routerLink]="card.id"></app-card>
     </div>
@@ -73,7 +79,7 @@
 
     <div class="controls flexed">
       <div class="flexed end col">
-        <button routerLink="/creator/new-card" aria-label="new card" class="btn raised circle primary">
+        <button routerLink="/creator/create-card" aria-label="new card" class="btn raised circle primary">
           <i class="bi bi-plus"></i>
         </button>
       </div>
