@@ -15,7 +15,7 @@ import { AuthService } from '@app-core/auth.service';
 
       <span class="spacer"></span>
 
-      <div class="logout padded flexed end">
+      <div class="logout padded flexed center">
         <a href="#" (click)="authSvc.logout()">
           <h3>logout</h3>
         </a>

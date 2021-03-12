@@ -7,9 +7,9 @@
     <!-- <button class="btn circle text">
       <i class="bi bi-grid-fill"></i>
     </button> -->
-    <button class="btn">
-      <i class="bi bi-grid-fill menu-control small" (click)="showMenu = !showMenu"></i>
-    </button>
+    <h3 class="btn">
+      :)
+    </h3>
   </nav>
 
   <div class="app-menu" [ngClass]="{'active': showMenu}">
@@ -87,8 +87,11 @@
       <div class="sized-box"></div>
 
       <div class="flexed end col">
-        <button routerLink="/hello" aria-label="play hello message" class="btn raised circle primary">
-          <i class="bi bi-heart-fill small"></i>
+        <button (click)="showMenu = !showMenu" aria-label="menu" class="btn raised circle primary menu-control ">
+          <i *ngIf="!showMenu;else closeMenu" class="bi bi-list small"></i>
+          <ng-template #closeMenu>
+            <i class="bi bi-x small"></i>
+          </ng-template>
         </button>
       </div>
     </div>

@@ -26,7 +26,7 @@ export class GreetingComponent implements OnInit {
     this.animateMessage(this.messageLines);
   }
 
-  animateMessage(messageLines: string[], lineIndex = 0, duration = 3000, delay = 300) {
+  animateMessage(messageLines: string[], lineIndex = 0, duration = 2000, delay = 300) {
     setTimeout(() => {
       this.activeMessage = messageLines[lineIndex];
       this.showMessage = true;
