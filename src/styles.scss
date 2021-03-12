@@ -2,6 +2,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400&family=Rokkitt:wght@400;600&display=swap');
 @import "~bootstrap-icons/font/bootstrap-icons.css";
 
+// TODO: REMOVE ON PROD
+.firebase-emulator-warning {
+  display: none;
+}
+
 :root {
   --clr-text: rgba(0, 0, 0, 0.87);
   --clr-text-disabled: rgba(0, 0, 0, 0.67);
@@ -20,7 +25,7 @@
 *::after {
   margin: 0;
   padding: 0;
-  font-size: inherit;
+  // font-size: inherit;
   box-sizing: inherit;
 }
 
@@ -341,6 +346,7 @@ input {
   left: 0;
   height: 100%;
   width: 100%;
+  z-index: 1000;
 }
 
 // *################## COMPONENTS
@@ -359,6 +365,16 @@ input {
 }
 
 // *################### THUMBS
+.display-md-only {
+  display: none;
+}
+
+@media screen and (min-device-width: 720px) {
+  .display-md-only {
+    display: inherit;
+  }
+}
+
 @media screen and (min-device-width: 1200px) and (max-device-width: 1600px) and (-webkit-min-device-pixel-ratio: 1) {
   .desktop-only {
     display: inherit !important;

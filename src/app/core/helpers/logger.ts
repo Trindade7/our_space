@@ -6,6 +6,7 @@ interface LogType {
 }
 
 export class Logger {
+  private static _title = '';
   /**
    *
    * Starts a groupCollapsed log that has to be Closed
@@ -90,6 +91,7 @@ export class Logger {
    */
   static startCollapsed(title: string, logs: unknown[] = []): void {
     if (environment.production === false) {
+      this._title = title;
       console.groupCollapsed(title);
       console.log(...logs);
     }
@@ -111,7 +113,8 @@ export class Logger {
    */
   static endCollapsed(logs: unknown[] = []): void {
     if (environment.production === false) {
-      console.log(...logs);
+      console.groupCollapsed(`End ${this._title}`, logs);
+      this._title = '';
       console.groupEnd();
     }
   }
@@ -123,6 +126,7 @@ export class Logger {
    */
   static collapsed(title: string, logs: unknown[] = []): void {
     if (environment.production === false) {
+      this._title = title;
       console.groupCollapsed(title);
       console.log(...logs);
       console.groupEnd();

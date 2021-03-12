@@ -7,7 +7,7 @@
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
-          "inlineTemplate": false,
+          "inlineTemplate": true,
           "style": "scss"
         },
         "@schematics/angular:application": {
@@ -38,12 +38,10 @@
           },
           "configurations": {
             "production": {
-              "fileReplacements": [
-                {
-                  "replace": "@app-envs/environment.ts",
-                  "with": "@app-envs/environment.prod.ts"
-                }
-              ],
+              "fileReplacements": [{
+                "replace": "@app-envs/environment.ts",
+                "with": "@app-envs/environment.prod.ts"
+              }],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -51,8 +49,7 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
-              "budgets": [
-                {
+              "budgets": [{
                   "type": "initial",
                   "maximumWarning": "500kb",
                   "maximumError": "1mb"

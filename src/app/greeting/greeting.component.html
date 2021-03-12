@@ -6,11 +6,12 @@
     </div>
 
     <div class="controls padded flexed center" *ngIf="showControls">
-      <button (click)="greet()" class="btn text">
+      <!-- REPLAY BUTTON
+        <button (click)="greet()" class="btn text">
         <i class="bi bi-arrow-repeat"></i>
       </button>
 
-      <div class="sized-box"></div>
+      <div class="sized-box"></div> -->
 
       <a [routerLink]="['/cards']" routerLinkActive="router-link-active" class="btn outline">
         Ver cartões
@@ -20,12 +21,13 @@
   </div>
 
   <ng-template #notStartedTemplate>
-    <div class="init">
+    <!-- TODO: ADD INIT ANIMATION
+      <div class="init">
       <h1 class="padded">Olá Xinha</h1>
       <button (click)="greet()" class="btn outline">
         START
       </button>
-    </div>
+    </div> -->
   </ng-template>
 
 </div>

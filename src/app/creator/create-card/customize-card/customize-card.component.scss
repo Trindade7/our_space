@@ -1,0 +1,61 @@
+.customize-container {
+  height: calc(100vh - 80px);
+}
+
+.card-preview {
+  // TODO: change flex to adapt to parent container size
+  max-height: 500px;
+  flex: auto;
+}
+
+.row {
+  gap: .5rem;
+  padding: .5rem;
+  overflow-x: auto;
+  scroll-snap-align: start;
+}
+
+.background-picker {
+  .colors {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
+.color-picker {
+  .colors {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .color {
+    width: 25px;
+    height: 25px;
+    border-radius: 5px;
+    margin: 8px;
+    flex: none;
+    border: 1px solid #ddd;
+  }
+}
+
+.nav-bar {
+  justify-content: center;
+  background: #efefef;
+  padding: 1rem;
+
+  .btn {
+    padding: 0;
+    margin: 0 .5rem;
+
+    i {
+      font-size: 1.5rem;
+      width: 30px;
+      height: 30px;
+    }
+
+    small {
+      padding-top: .25rem;
+      width: 80px;
+    }
+  }
+}

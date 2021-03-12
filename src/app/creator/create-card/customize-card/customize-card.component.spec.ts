@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ColorPickerComponent } from './color-picker.component';
+import { CustomizeCardComponent } from './customize-card.component';
 
-describe('ColorPickerComponent', () => {
-  let component: ColorPickerComponent;
-  let fixture: ComponentFixture<ColorPickerComponent>;
+describe('CustomizeCardComponent', () => {
+  let component: CustomizeCardComponent;
+  let fixture: ComponentFixture<CustomizeCardComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ColorPickerComponent ]
+      declarations: [ CustomizeCardComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ColorPickerComponent);
+    fixture = TestBed.createComponent(CustomizeCardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

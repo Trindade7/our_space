@@ -9,11 +9,11 @@ import { CardsService } from './cards.service';
   styleUrls: ['./cards.component.scss']
 })
 export class CardsComponent implements OnInit {
-  // cards: CardModel[] = [mockCard()];
+  showMenu = false;
   cards$: Observable<CardModel[]>;
 
-  constructor (private _cardsSvc: CardsService) {
-    this.cards$ = this._cardsSvc.cards;
+  constructor (public cardsSvc: CardsService) {
+    this.cards$ = this.cardsSvc.cards$;
   }
 
   ngOnInit(): void {
@@ -21,5 +21,4 @@ export class CardsComponent implements OnInit {
 
   prev(): void { }
   next(): void { }
-
 }

@@ -3,6 +3,7 @@ export interface UserModel {
     name: string;
     photoUrl: string;
     email: string;
+    pairs?: string[];
 }
 
 export function newUser(user: UserModel = {

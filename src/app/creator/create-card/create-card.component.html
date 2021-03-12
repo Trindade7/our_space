@@ -1,0 +1,83 @@
+<div class="view-card-page flexed col">
+  <div *ngIf="(store.loading$|async)" class="loading-zone flexed center">
+    <app-loading-spinner></app-loading-spinner>
+  </div>
+
+  <nav class="page-header flexed padded">
+    <button (click)="appSvc.goHome()" class="btn circle text">
+      <i class="bi bi-x"></i>
+    </button>
+    <div class="sized-box"></div>
+    <div>
+      <h3>{{pageName|async}}</h3>
+    </div>
+
+    <span class="spacer"></span>
+
+    <div class="flexed">
+      <button *ngIf="(store.currentPage$|async)!==pages.TEXT" (click)="store.prevPage()" class="prev btn circle text">
+        <i class="bi bi-arrow-left"></i>
+      </button>
+
+      <div class="sized-box-05"></div>
+
+      <button *ngIf="(store.currentPage$|async)!==pages.PREVIEW" (click)="store.nextPage()" class="btn circle text">
+        <i class="bi bi-arrow-right"></i>
+      </button>
+
+      <button *ngIf="(store.currentPage$|async)===pages.PREVIEW" (click)="saveCard()" class="btn accent circle text"
+        [disabled]="store.isValid">
+        <i class="bi bi-check-circle-fill"></i>
+      </button>
+    </div>
+  </nav>
+
+  <div *ngIf="(store.currentPage$|async) === pages.TEXT" class="states flexed col padded">
+    <span class="spacer"></span>
+
+    <div class="card-text">
+      <p class="text-center">
+        Digite a mensagem para o cartão na caixa abaixo,
+        <strong>min 5 carácteres</strong>...
+      </p>
+
+      <div class="message padded">
+        <textarea #messageInput class="message-input" name="message" id="message-input" rows="10"
+          [(ngModel)]="store.card.message">
+                </textarea>
+      </div>
+
+      <div class="flexed center padded">
+        <button (click)="store.nextPage()" class="btn icon outline" [disabled]="store.isValid">
+          <span>Escolher fundo</span>
+        </button>
+      </div>
+    </div>
+
+    <span class="spacer"></span>
+
+  </div>
+
+  <div *ngIf="(store.currentPage$|async) === pages.CUSTOMIZE" class="states flexed col">
+    <app-customize-card></app-customize-card>
+  </div>
+
+  <div *ngIf="(store.currentPage$|async) === pages.PREVIEW" class="states flexed col padded">
+    <span class="spacer"></span>
+
+    <div class="final-card">
+      <app-card [card]="store.card"></app-card>
+    </div>
+
+    <div class="sized-box"></div>
+
+    <div class="flexed center padded">
+      <button (click)="saveCard()" class="btn outline accent" [disabled]="!store.isValid">
+        <span>PUBLICAR</span>
+      </button>
+    </div>
+    <span class="spacer"></span>
+  </div>
+
+  <span class="spacer"></span>
+</div>

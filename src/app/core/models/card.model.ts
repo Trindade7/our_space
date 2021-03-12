@@ -6,6 +6,15 @@ export interface CardBackgroungModel {
     positionX: 'left' | 'center' | 'right';
     positionY: 'top' | 'center' | 'bottom';
 }
+export interface CardFontModel {
+    color: string;
+    fontFamily: string;
+    size: number | 'inherit';
+    fontWeight: 200 | 300 | 500 | 900 | 'inherit';
+    italic: boolean;
+    strokeSize: number | 'inherit';
+    strokeColor: string;
+}
 
 export interface CardModel {
     id: string;
@@ -17,11 +26,12 @@ export interface CardModel {
         milliseconds: number;
         seconds: number;
     };
-    createdBy: string;
-    creator?: {
+    creator: {
+        id: string;
         name: string,
         email: string;
     };
+    font?: CardFontModel;
 }
 
 
@@ -43,7 +53,12 @@ export function newCard(cardIn?: CardModel): CardModel {
         message: '',
         textColor: '#000',
         textStrokeColor: 'transparent',
-        createdBy: 'testing'
+        font: newCardFont(),
+        creator: {
+            id: randomString(1),
+            name: 'testing',
+            email: 'trindade.jose77@gmail.com'
+        },
     }, cardIn);
 
     return card;
@@ -52,7 +67,7 @@ export function newCard(cardIn?: CardModel): CardModel {
 export function mockCard(): CardModel {
     const newDate = new Date();
     return {
-        id: randomString(3, ''),
+        id: randomString(1),
         message: randomString(100),
         textStrokeColor: 'transparent',
         textColor: randomColor(),
@@ -61,7 +76,23 @@ export function mockCard(): CardModel {
             milliseconds: newDate.getMilliseconds(),
             seconds: newDate.getSeconds()
         },
-        createdBy: 'testing'
+        creator: {
+            id: randomString(1),
+            name: 'testing',
+            email: 'trindade.jose77@gmail.com'
+        },
+        font: newCardFont()
+    };
+}
+
+export function createColorBackground(color: string): CardBackgroungModel {
+    return {
+        color: color,
+        imageUrl: '',
+        size: 0,
+        repeat: 'no-repeat',
+        positionX: 'left',
+        positionY: 'bottom',
     };
 }
 
@@ -73,6 +104,18 @@ export function mockBackground(): CardBackgroungModel {
         repeat: 'no-repeat',
         positionX: 'left',
         positionY: 'bottom',
+    };
+}
+
+export function newCardFont(font?: Partial<CardFontModel>): CardFontModel {
+    return {
+        color: font?.color ?? 'inherit',
+        fontFamily: font?.fontFamily ?? 'inherit',
+        size: font?.size ?? 'inherit',
+        fontWeight: font?.fontWeight ?? 'inherit',
+        italic: font?.italic ?? false,
+        strokeSize: font?.strokeSize ?? 'inherit',
+        strokeColor: font?.strokeColor ?? 'inherit',
     };
 }
 

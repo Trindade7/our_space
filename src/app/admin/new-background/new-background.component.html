@@ -1,4 +1,8 @@
 <div class="admin-page  flexed col">
+  <div *ngIf="loading" class="loading-zone flexed center">
+    <app-loading-spinner></app-loading-spinner>
+  </div>
+
   <nav class="page-header flexed padded">
     <button (click)="goBack()" class="btn circle text">
       <i class="bi bi-x"></i>
@@ -37,7 +41,7 @@
       </header>
 
       <div *ngIf="selectedControl === 'size'" class="size flexed center padded-y">
-        <input [(ngModel)]="size" type="number" min="50" max="1000" placeholder="width..." class="size-input">
+        <input [(ngModel)]="backgroundSize" type="number" min="50" max="1000" placeholder="width..." class="size-input">
 
         <div class="sized-box"></div>
 
