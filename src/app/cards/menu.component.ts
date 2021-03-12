@@ -43,7 +43,6 @@ import { AuthService } from '@app-core/auth.service';
       width: 100%;
     }
   `],
-  styleUrls: ['./menu.component.scss'],// TODO: DEL ON PROD
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MenuComponent implements OnInit {
