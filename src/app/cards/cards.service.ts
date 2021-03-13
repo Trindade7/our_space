@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { watch } from 'rxjs-watcher';
-import { switchMap, tap } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
 
 import { AuthService } from '../core/auth.service';
 import { DatabaseService } from '../core/database.service';
@@ -40,8 +40,20 @@ export class CardsService {
   }
 
   card$(id: string): Observable<CardModel | null> {
-    return this._dbSvc.docOrNull$<CardModel>(id, this._cardCollectionPath).pipe(
-      tap(card => console.log({ card }))
+    return this._authSvc.userOrNull$.pipe(
+      switchMap(user => {
+        if (!user) {
+          throw new Error("Not logged in");
+        }
+
+        if (user.pairs?.length) {
+          this._cardCollectionPath = `pairs/${user.pairs[0]}/cards`;
+        } else {
+          this._cardCollectionPath = `pairs/${user.id}/cards`;
+        }
+        return this._dbSvc.docOrNull$<CardModel>(id, this._cardCollectionPath);
+      }),
+      watch('[cards.service] userOrNull$ to cards$ switchMap')
     );
   }
 }

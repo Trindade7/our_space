@@ -29,12 +29,18 @@
   }
 
   .color {
-    width: 25px;
-    height: 25px;
-    border-radius: 5px;
-    margin: 8px;
+    width: 35px;
+    height: 35px;
+    margin: .25rem;
     flex: none;
     border: 1px solid #ddd;
+
+    transition: box-shadow 200ms ease-i;
+
+    &:hover,
+    &:focus {
+      box-shadow: 4px 4px;
+    }
   }
 }
 

@@ -113,6 +113,10 @@ export class CreateCardStore extends StoreGeneric<CreateCardModel>{
     this.card.background.size = size;
     this.card = Object.assign({}, this.card);
   }
+  set textColor(color: string) {
+    this.card.textColor = color;
+    this.card = Object.assign({}, this.card);
+  }
 
   get isValid(): boolean {
     return !(this.card.message.length > 5);
